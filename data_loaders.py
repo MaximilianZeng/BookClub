@@ -14,11 +14,11 @@ def load_works():
     return data
 
 def load_inverted():
-    with open('./data/inverted_index_min=0.8_max=0.99', 'rb') as f:
+    with open('./data/NEW_500_SVD_inverted_index_k=200_mintf=0_mindf=0.8_maxdf=0.99', 'rb') as f:
         data = pickle.load(f)
     return data
 
 def load_tfidf():
-    with open('./data/work_tf_idf_vectors_min=0.8_max=0.99_NORMS', 'rb') as f:
+    with open('./data/NEW_500_SVD_work_tfidf_vecs_k=200_mintf=0_mindf=0.8_maxdf=0.99', 'rb') as f:
         data = pickle.load(f)
     return data

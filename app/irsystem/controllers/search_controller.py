@@ -4,10 +4,15 @@ from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 from app import app as data_pool
 import json
 from app.irsystem.models.search import get_doc_rankings
-
+#import os
+#import psutil
 project_name = "Book Club"
 net_id = "Caroline Lui: cel243, Elisabeth Finkel: esf76, Janie Walter: jjw249, Kurt Huebner: krh57, Taixiang(Max) Zeng: tz376"
 
+def memory_usage_psutil():
+	# return the memory usage in MB
+	process = psutil.Process(os.getpid())
+	print(process.memory_info().rss/float(2 ** 20))
 
 ### helpers ###
 def _get_book_from_partial(works, book_str):
@@ -83,4 +88,5 @@ def select():
 # Initial route to index.html
 @irsystem.route('/', methods=['GET'])
 def search():
+	#print(memory_usage_psutil())
 	return render_template('index.html'), 200

@@ -28,7 +28,7 @@ def cosine_similarity(joined_queries, inverted_index, tf_idf_vectors):
         df = len(inverted_index[term])
         for work, tf in inverted_index[term].items():
             #Calculating the numerator (dot product) of cosine similarity here.
-            cosine_similarity[work] += tf*math.log2(num_works/(1+df))*tf_idf
+            cosine_similarity[work] += tf*tf_idf
     
     #We aren't computing "true" cosine similarity, just relative rankings, hence the lack of a query norm term
     cosine = []
