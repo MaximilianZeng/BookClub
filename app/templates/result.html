@@ -2,11 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>BookClub</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../static/result.css">
 </head>
 <body>
-    <h1>Result page</h1>
+    <h1>Here's what you should read next!</h1>
+    <div id="bookDisplay">
+    </div>
+
+    <script>
+        $(function() {
+            var data = sessionStorage.getItem("result");
+            if(data) {
+                console.log("Results found: ");
+                console.log(data);
+                var data_string = JSON.parse(data);
+                var book_data = JSON.parse(data_string);
+                console.log(book_data);
+                var all_books = $("<div class=\"all-books\">");
+                for(var i = 0; i < 10; i++) {
+                    var book = book_data[i];
+                    console.log(book);
+                    var book_link = $("<a class=\"book-link\" href=\"" + book.book_url + "\"" + "target=\"_blank\">");
+                    var book_display = $("<div class=\"book\">");
+                    var img = $("<img class=\"book-cover\"src=\"" + book.image_url + "\">");
+                    book_display.append(img.clone());
+                    var title = $("<h2 class=\"book-title\">");
+                    title.append(book.title);
+                    book_display.append(title.clone());
+                    var author = $("<h3 class=\"book-author\">");
+                    author.append(book.author ? book.author[0] : "Author Not Found");
+                    book_display.append(author.clone());
+                    var summary = $("<div class=\"book-summary\">");
+                    summary.append(book.description);
+                    book_display.append(summary.clone());
+
+                    book_link.append(book_display.clone());
+                    all_books.append(book_link.clone());
+                }
+                $("#bookDisplay").append(all_books.clone());
+            }
+            else {
+                console.log("No results found!");
+                console.log(data);
+            }
+        });
+    </script>
 </body>
 </html>
