@@ -15,13 +15,14 @@ def memory_usage_psutil():
 	print(process.memory_info().rss/float(2 ** 20))
 
 ### helpers ###
-def _get_book_from_partial(works, book_str):
+def _get_book_from_partial(book_str):
 	"""Given a partial string `book_str`, returns a list of elements 
 	("book_name by author", work_id, cover) where book_str is a substring
 	of book_name. The HTML template can then use the strings, work_ids, 
 	and cover image urls to display possible matches for the user to
 	select between.
 	"""
+	works = data_pool.data['works']
 	relv_books = []
 	book_str = book_str.lower()
 	for work_id in works.keys():
@@ -35,7 +36,28 @@ def _get_book_from_partial(works, book_str):
 			)
 	return relv_books
 
+def _clean(s):
+	""" To clean author names """
+	return s.lower().replace(".", "").strip()
 
+def _get_author_from_partial(auth_str):
+	"""Given a partial string `auth_str`, returns a list of elements 
+	(full_name, auth_id) where auth_id has name full_name and where
+	auth_str is a substring of full_name.
+	
+	The HTML template can then use the strings to display possible matches
+	for the user to select between.
+	"""
+	authors = data_pool.data['authors'] 
+	relv_auths = []
+	auth_str = _clean(auth_str)
+	for i, auth_name in enumerate(authors):
+		if auth_str in _clean(auth_name):
+			relv_auths.append({"name": auth_name, "author_id": i})
+	return relv_auths
+
+
+# def _get_reccs(work_ids, disliked_works, authors, required_genres, excluded_genres):
 def _get_reccs(work_ids):
 	return get_doc_rankings(
 		work_ids,
@@ -53,7 +75,16 @@ def get_book_from_partial():
 	partial = request.args.get('partial')
 	if not partial:
 		return json.dumps([])
-	return json.dumps(_get_book_from_partial(data_pool.data['works'], partial))
+	return json.dumps(_get_book_from_partial(partial))
+
+
+# GET request to search for matching author names
+@irsystem.route('/authornames', methods=['GET'])
+def get_author_from_partial():
+	partial = request.args.get('partial')
+	if not partial:
+		return json.dumps([])
+	return json.dumps(_get_author_from_partial(partial))
 
 
 ### html endpoints ###
