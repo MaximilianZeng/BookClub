@@ -22,8 +22,6 @@ def _get_book_from_partial(book_str):
 	and cover image urls to display possible matches for the user to
 	select between.
 	"""
-	if len(book_str) < 3:
-		return []
 	works = data_pool.data['works']
 	relv_books = []
 	book_str = book_str.lower()
@@ -36,6 +34,8 @@ def _get_book_from_partial(book_str):
 			relv_books.append(
 				{"string": string, "work_id": work_id, "image": works[work_id].get("image")}
 			)
+		if len(relv_books) >= 20:
+			break
 	return relv_books
 
 def _clean(s):
@@ -56,6 +56,8 @@ def _get_author_from_partial(auth_str):
 	for i, auth_name in enumerate(authors):
 		if auth_str in _clean(auth_name):
 			relv_auths.append({"name": auth_name, "author_id": i})
+		if len(relv_auths) >= 20:
+			break
 	return relv_auths
 
 def fake_results():
