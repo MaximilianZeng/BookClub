@@ -59,6 +59,11 @@ def _get_author_from_partial(auth_str):
 
 # def _get_reccs(work_ids, disliked_works, authors, required_genres, excluded_genres):
 def _get_reccs(work_ids):
+	# eligible = []
+	# req, exc = set(required_genres), set(excluded_genres)
+	# for i in work_ids:
+	# 	if set(work_ids[i]['genre']).issubset(req) and set(work_ids[i]['genre']).isdisjoint(exc):
+	# 		eligible.append(i) # or could append work_ids[i]
 	return get_doc_rankings(
 		work_ids,
 		data_pool.data['tfidf'],
@@ -93,9 +98,14 @@ def get_author_from_partial():
 @irsystem.route('/result', methods=['POST'])
 def get_reccs():
 	req = json.loads(request.data)
-	liked_work_ids = req.get('liked_works')
+	liked = req.get('liked_works')
+	# disliked = req.get('disliked_works')
+	# authors = req.get('authors')
+	# req_genres = req.get('required_genres')
+	# ex_genres = req.get('excluded_genres')
 
-	results = _get_reccs(liked_work_ids)
+	results = _get_reccs(liked)
+	# results = _get_reccs(liked, disliked, authors, req_genres, ex_genres)
 	return json.dumps(results)
 
 
