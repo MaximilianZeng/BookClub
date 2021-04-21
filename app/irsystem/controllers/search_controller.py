@@ -9,10 +9,10 @@ from app.irsystem.models.search import get_doc_rankings
 project_name = "Book Club"
 net_id = "Caroline Lui: cel243, Elisabeth Finkel: esf76, Janie Walter: jjw249, Kurt Huebner: krh57, Taixiang(Max) Zeng: tz376"
 
-def memory_usage_psutil():
-	# return the memory usage in MB
-	process = psutil.Process(os.getpid())
-	print(process.memory_info().rss/float(2 ** 20))
+# def memory_usage_psutil():
+# 	# return the memory usage in MB
+# 	process = psutil.Process(os.getpid())
+# 	print(process.memory_info().rss/float(2 ** 20))
 
 ### helpers ###
 def _get_book_from_partial(book_str):
@@ -22,10 +22,12 @@ def _get_book_from_partial(book_str):
 	and cover image urls to display possible matches for the user to
 	select between.
 	"""
+	if len(book_str) < 3:
+		return []
 	works = data_pool.data['works']
 	relv_books = []
 	book_str = book_str.lower()
-	for work_id in works.keys():
+	for work_id in range(len(works)):
 		title = works[work_id]['title']
 		if book_str in title.lower():
 			authors = works[work_id].get("author_names", ["(unknown)"])
@@ -56,18 +58,35 @@ def _get_author_from_partial(auth_str):
 			relv_auths.append({"name": auth_name, "author_id": i})
 	return relv_auths
 
+def fake_results():
+	return [
+		{
+			"title": "abc"+str(i),
+			"author": "asdfa",
+			"ranking": i,
+			"book_url": "https://www.goodreads.com/book/show/862041.Harry_Potter_Boxset",
+			"image_url": "https://images.gr-assets.com/books/1392579059m/862041.jpg",
+			"description": "this book is about...",
+			"genres": ["fantasy", "whatever"]
+		}
+		for i in range(20)
+	]
 
-# def _get_reccs(work_ids, disliked_works, authors, required_genres, excluded_genres):
-def _get_reccs(work_ids):
-	# eligible = []
-	# req, exc = set(required_genres), set(excluded_genres)
-	# for i in work_ids:
-	# 	if set(work_ids[i]['genre']).issubset(req) and set(work_ids[i]['genre']).isdisjoint(exc):
-	# 		eligible.append(i) # or could append work_ids[i]
+
+def _get_reccs(work_ids, auth_ids, required_genres, excluded_genres):
+	works = data_pool.data['works']
+	eligible = []
+	req, exc = set(required_genres), set(excluded_genres)
+	for i, work in enumerate(works):
+		if set(work['genres']).issubset(req) and set(work['genres']).isdisjoint(exc):
+			eligible.append(i) # or could append work_ids[i]
+	return fake_results() # TODO remove once get_doc_rankings is updated
 	return get_doc_rankings(
-		work_ids,
-		data_pool.data['tfidf'],
-		data_pool.data['inverted_index'],
+		work_ids, ## should this be a mapping of work ids to the weight of that work?
+		eligible,
+		auth_ids, ## similarly with the weight thing
+		data_pool.data['work_mat'],
+		data_pool.data['auth_mat'],
 		data_pool.data['works']
 	)
 
@@ -97,16 +116,20 @@ def get_author_from_partial():
 # Endpoint that receives preferences
 @irsystem.route('/result', methods=['POST'])
 def get_reccs():
+	# With some temporary case-handling in case frontend/backend
+	# haven't all implemented the same features/specs yet
 	req = json.loads(request.data)
-	liked = req.get('liked_works')
-	# disliked = req.get('disliked_works')
-	# authors = req.get('authors')
-	# req_genres = req.get('required_genres')
-	# ex_genres = req.get('excluded_genres')
+	works = req.get('works') # list of dicts: [{work_id: 234, score: -2}, ...]
+	if works is None:
+		works = [{"work_id": i, "score": 1} for i in req.get('liked_works')]
+	authors = req.get('authors')
+	if authors is None:
+		authors = [{"work_id": i, "score": 1} for i in req.get('authors', [])]
+	req_genres = req.get('required_genres', [])
+	ex_genres = req.get('excluded_genres', [])
 
-	results = _get_reccs(liked)
-	# results = _get_reccs(liked, disliked, authors, req_genres, ex_genres)
-	return json.dumps(results)
+	results = _get_reccs(works, authors, req_genres, ex_genres)
+	return json.dumps(json.dumps(results))
 
 
 # Endpoint to redirect to result page
