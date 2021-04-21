@@ -9,10 +9,10 @@ from app.irsystem.models.search import get_doc_rankings
 project_name = "Book Club"
 net_id = "Caroline Lui: cel243, Elisabeth Finkel: esf76, Janie Walter: jjw249, Kurt Huebner: krh57, Taixiang(Max) Zeng: tz376"
 
-def memory_usage_psutil():
-	# return the memory usage in MB
-	process = psutil.Process(os.getpid())
-	print(process.memory_info().rss/float(2 ** 20))
+# def memory_usage_psutil():
+# 	# return the memory usage in MB
+# 	process = psutil.Process(os.getpid())
+# 	print(process.memory_info().rss/float(2 ** 20))
 
 ### helpers ###
 def _get_book_from_partial(book_str):
@@ -25,7 +25,7 @@ def _get_book_from_partial(book_str):
 	works = data_pool.data['works']
 	relv_books = []
 	book_str = book_str.lower()
-	for work_id in works.keys():
+	for work_id in range(len(works)):
 		title = works[work_id]['title']
 		if book_str in title.lower():
 			authors = works[work_id].get("author_names", ["(unknown)"])
@@ -58,11 +58,12 @@ def _get_author_from_partial(auth_str):
 
 
 # def _get_reccs(work_ids, disliked_works, authors, required_genres, excluded_genres):
-def _get_reccs(work_ids):
+def _get_reccs(work_ids, auth_ids):
 	return get_doc_rankings(
-		work_ids,
-		data_pool.data['tfidf'],
-		data_pool.data['inverted_index'],
+		work_ids, ## should this be a mapping of work ids to the weight of that work?
+		auth_ids, ## similarly with the weight thing
+		data_pool.data['work_mat'],
+		data_pool.data['auth_mat'],
 		data_pool.data['works']
 	)
 
@@ -95,7 +96,7 @@ def get_reccs():
 	req = json.loads(request.data)
 	liked_work_ids = req.get('liked_works')
 
-	results = _get_reccs(liked_work_ids)
+	results = _get_reccs(liked_work_ids, None) ## get author input somehow
 	return json.dumps(results)
 
 
