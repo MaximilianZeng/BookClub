@@ -75,18 +75,21 @@ def fake_results():
 	]
 
 
-def _get_reccs(work_ids, auth_ids, required_genres, excluded_genres):
+def _get_reccs(work_ids, auth_ids, desired_genres, excluded_genres):
 	works = data_pool.data['works']
 	eligible = []
-	req, exc = set(required_genres), set(excluded_genres)
+	des, exc = set(desired_genres), set(excluded_genres)
 	for i, work in enumerate(works):
-		if set(work['genres']).issubset(req) and set(work['genres']).isdisjoint(exc):
-			eligible.append(i) # or could append work_ids[i]
+		# # Logical AND and logical NOT:
+		# if set(work['genres']).issubset(req) and set(work['genres']).isdisjoint(exc):
+		# # Logical OR and logical NOT:
+		if set(work['genres'])&des and set(work['genres']).isdisjoint(exc):
+			eligible.append(i)
 	return fake_results() # TODO remove once get_doc_rankings is updated
 	return get_doc_rankings(
-		work_ids, ## should this be a mapping of work ids to the weight of that work?
+		work_ids,
 		eligible,
-		auth_ids, ## similarly with the weight thing
+		auth_ids,
 		data_pool.data['work_mat'],
 		data_pool.data['auth_mat'],
 		data_pool.data['works']
