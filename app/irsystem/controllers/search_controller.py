@@ -129,7 +129,7 @@ def get_reccs():
 		works = [{"work_id": i, "score": 1} for i in req.get('liked_works')]
 	authors = req.get('authors')
 	if authors is None:
-		authors = [{"work_id": i, "score": 1} for i in req.get('authors', [])]
+		authors = [{"auth_id": i, "score": 1} for i in req.get('authors', [])]
 	req_genres = req.get('required_genres', [])
 	ex_genres = req.get('excluded_genres', [])
 
