@@ -2,7 +2,7 @@ import math
 import json
 from collections import defaultdict
 import numpy as np
-def cosine_similarity(joined_queries, eligible, work_mat, query_works):
+def cosine_similarity(joined_queries, eligible, work_mat, query_works, negative_query_works):
     """Returns a list of work ids ranked by similarity to a query. Does not use formal cosine similarity due to the omission of normalizing by the doc norm. 
 
     Arguments
@@ -28,7 +28,8 @@ def cosine_similarity(joined_queries, eligible, work_mat, query_works):
     for work, score in results:
         cosine_sims = []
         for query in query_works:
-            cosine_sims.append(np.dot(work_mat[query], work_mat[work]))
+            if query not in negative_query_works:
+                cosine_sims.append(np.dot(work_mat[query], work_mat[work]))
         reordered_results.append((work, np.min(np.array(cosine_sims))))
         reordered_results.sort(key=lambda x: x[1], reverse=True)
     return reordered_results
@@ -80,11 +81,28 @@ def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
     ======
     results_list: A JSON-formatted list of dictionaries containing K/V pairs for title, author, ranking, book_url, image_url, and description.
     """
+def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
+    """Returns a dictionary of terms and tf-idf values representing the combined result of individual queries
+
+    Arguments
+    =========
+
+    work_ids: list,
+        A list of works in the query
+
+
+    Returns
+    ======
+    results_list: A JSON-formatted list of dictionaries containing K/V pairs for title, author, ranking, book_url, image_url, and description.
+    """
     query_works = []
+    negative_query_works = []
     for query in work_ids:
         query_works.append(query["work_id"])
+        if query["score"] < 0:
+            negative_query_works.append(query)
     joined_queries = combine_queries(work_ids, auth_ids, work_mat, auth_mat)
-    ranked_results = cosine_similarity(joined_queries, eligible, work_mat, query_works)
+    ranked_results = cosine_similarity(joined_queries, eligible, work_mat, query_works, negative_query_works)
     #Removing the query books from the ranking
     corrected_results = []
     for result in ranked_results:
