@@ -52,8 +52,7 @@
             if(data) {
                 console.log("Results found: ");
                 console.log(data);
-                var data_string = JSON.parse(data);
-                var book_data = JSON.parse(data_string);
+                var book_data = JSON.parse(data);
                 console.log(book_data);
                 var all_books = $("<div class=\"all-books\">");
                 for (var i = 0; i < book_data.length; i++) {

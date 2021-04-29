@@ -68,12 +68,25 @@ def fake_results():
 			"ranking": i,
 			"book_url": "https://www.goodreads.com/book/show/862041.Harry_Potter_Boxset",
 			"image_url": "https://images.gr-assets.com/books/1392579059m/862041.jpg",
-			"description": "this book is about...",
+			"description": "this book is about..." + "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."*3,
 			"genres": ["fantasy", "whatever"]
 		}
 		for i in range(20)
 	]
 
+def rescore(inputs, idid):
+	"""Given some inputs in form [{work_id: stars}], rescale and
+	return rescored inpust in form [{`idid`: work_id, "score": score}]"""
+	rescale = {1: -1.8, 2: -0.9, 3: 0.5, 4: 1, 5: 2}
+	rescored = []
+	for i in inputs:
+		iid, stars = list(i.items())[0]
+		if type(iid)==str:
+			iid = int(iid)
+		if type(stars)==str:
+			stars = int(stars)
+		rescored.append({idid: iid, "score": rescale.get(stars, 0)})
+	return rescored
 
 def _get_reccs(work_ids, auth_ids, desired_genres, excluded_genres):
 	works = data_pool.data['works']
@@ -85,7 +98,9 @@ def _get_reccs(work_ids, auth_ids, desired_genres, excluded_genres):
 		# # Logical OR and logical NOT:
 		if set(work['genres'])&des and set(work['genres']).isdisjoint(exc):
 			eligible.append(i)
-	return fake_results() # TODO remove once get_doc_rankings is updated
+		elif len(desired_genres)==0 and set(work['genres']).isdisjoint(exc):
+			eligible.append(i)
+	# return fake_results() # TODO remove once get_doc_rankings is updated
 	return get_doc_rankings(
 		work_ids,
 		eligible,
@@ -121,20 +136,35 @@ def get_author_from_partial():
 # Endpoint that receives preferences
 @irsystem.route('/result', methods=['POST'])
 def get_reccs():
-	# With some temporary case-handling in case frontend/backend
-	# haven't all implemented the same features/specs yet
 	req = json.loads(request.data)
-	works = req.get('works') # list of dicts: [{work_id: 234, score: -2}, ...]
-	if works is None:
-		works = [{"work_id": i, "score": 1} for i in req.get('liked_works')]
+	works = req.get('works') # list of dicts: [{work_id: 234, stars: 2}, ...]
+	works_rescored = rescore(works, "work_id")
+
+	# works_rescored = []
+	# for w in works:
+	# 	wid, stars = list(w.items())[0]
+	# 	if type(wid)==str:
+	# 		wid = int(wid)
+	# 	if type(stars)==str:
+	# 		stars = int(stars)
+	# 	works_rescored.append({"work_id": wid, "score": rescale.get(stars, 0)})
 	authors = req.get('authors')
-	if authors is None:
-		authors = [{"auth_id": i, "score": 1} for i in req.get('authors', [])]
+	authors_rescored = rescore(authors, "auth_id")
+	# authors_rescored = []
+	# for a in authors:
+	# 	aid, stars = list(a.items())[0]
+	# 	if type(aid)==str:
+	# 		aid = int(aid)
+	# 	if type(stars)==str:
+	# 		stars = int(stars)
+	# 	authors_rescored.append({"auth_id": aid, "score": rescale.get(stars, 0)})
 	req_genres = req.get('required_genres', [])
 	ex_genres = req.get('excluded_genres', [])
 
-	results = _get_reccs(works, authors, req_genres, ex_genres)
-	return json.dumps(json.dumps(results))
+	print(works_rescored, authors_rescored, req_genres, ex_genres)
+	results = _get_reccs(works_rescored, authors_rescored, req_genres, ex_genres)
+	# print(results)
+	return json.dumps(results)
 
 
 # Endpoint to redirect to result page
@@ -143,19 +173,7 @@ def get_result():
 	return render_template('result.html'), 200
 
 
-# Route to select.html with num_users as parameter
-@irsystem.route('/select', methods=['GET'])
-def select():
-	query = request.args.get('num_users')
-	try:
-		num_users = int(query)
-		return render_template('select.html', users=num_users), 200
-	except:
-		return render_template('index.html'), 200
-
-
-# Initial route to index.html
+# Landing page
 @irsystem.route('/', methods=['GET'])
-def search():
-	#print(memory_usage_psutil())
-	return render_template('index.html'), 200
+def select():
+	return render_template('select.html'), 200
