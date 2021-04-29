@@ -84,7 +84,7 @@ def _get_reccs(work_ids, auth_ids, desired_genres, excluded_genres):
 		# # Logical OR and logical NOT:
 		if (set(work['genres'])&des or len(desired_genres)==0) and set(work['genres']).isdisjoint(exc):
 			eligible.append(i)
-	return get_doc_rankings(
+	results = get_doc_rankings(
 		work_ids,
 		eligible,
 		auth_ids,
@@ -92,6 +92,9 @@ def _get_reccs(work_ids, auth_ids, desired_genres, excluded_genres):
 		data_pool.data['auth_mat'],
 		data_pool.data['works']
 	)
+	for r in results:
+		r['author'] = ", ".join(r['author'])
+	return results
 
 
 ### ajax endpoints ###

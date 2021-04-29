@@ -33,7 +33,7 @@
             title.append(book.title);
             book_inspect.append(title);
             var author = $("<h3 class=\"book-author\">");
-            author.append(book.author ? book.author[0] : "Author Not Found");
+            author.append(book.author ? book.author : "Author Not Found");
             book_inspect.append(author);
             var sumTitle = $("<h3 class=\"book-summary-heading\">Summary</h3>");
             var summary = $("<div class=\"book-summary\">");
@@ -68,7 +68,7 @@
                     title.append(book.title);
                     book_display.append(title);
                     var author = $("<h3 class=\"book-author\">");
-                    author.append(book.author ? book.author[0] : "Author Not Found");
+                    author.append(book.author ? book.author : "Author Not Found");
                     book_display.append(author);
                     var summary = $("<div class=\"book-summary\">");
                     summary.append(book.description);
