@@ -58,7 +58,7 @@
                     <strong>User</strong>
                 </div>
                 <div class="book-area">
-                    <input type="text" name="" class="new-input book-input" placeholder="Add your favorite books here">
+                    <input type="text" name="" class="new-input book-input" placeholder="Add books here:">
                     <ul>
                         <li>
                             <div class="book-item" id="001">
@@ -80,7 +80,7 @@
                                     <input type="radio" id="star1" name="rate" value="1" />
                                     <label for="star1" title="text">1 star</label>
                                 </div> -->
-                                <input type="range" value="0" min="-5" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
+                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
                                 <output></output>
                                 <p>Love</p>
                             </div>
@@ -88,7 +88,7 @@
                     </ul>
                 </div>
                 <div class="author-area">
-                    <input type="text" name="" class="new-input author-input" placeholder="Add your favorite authors here">
+                    <input type="text" name="" class="new-input author-input" placeholder="Add authors here">
                     <ul>
                         <li>
                             <div class="author-item" id="007">
@@ -252,7 +252,7 @@
                 // let rating_row = $("<div class='row rating'>").html("<p>Hate</p><div class='clear-float'></div>");
                 // rating_row.append(stars);
                 // rating_row.append($("<p>Love</p>"))
-                li_input.append($("<div class='row rating'>").html("<p>Hate</p><input type='range' value='0' min='-5' max='5' step='1' oninput='this.nextElementSibling.value = this.value'><output></output><p>Love</p>"));
+                li_input.append($("<div class='row rating'>").html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.value = this.value'><output></output><p>Love</p>"));
                 
                 // li_input.append(rating_row);
 
@@ -283,7 +283,7 @@
             if (!userAuthorList.includes(authorID)){
                 let li_input = $("<li>");
                 li_input.append($("<div class=\"author-item\" id=\'" + authorID + "\'>").html("<span class=\"delete-button\">X</span>").append(authorName));
-                li_input.append($("<div class='row rating'>").html("<p>Hate</p><input type='range' value='0' min='-5' max='5' step='1' oninput='this.nextElementSibling.value = this.value'><output></output><p>Love</p>"));
+                li_input.append($("<div class='row rating'>").html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.value = this.value'><output></output><p>Love</p>"));
                 
                 // li_input.append(rating_row);
 
@@ -318,19 +318,6 @@
         })
 
         $("#submit-button").on("click", function() {
-            
-            // let bookList = {"liked_works" : []};
-            // $('.book-item').each(function() {
-            //     bookList["liked_works"].push($(this).attr("id"));
-            // });
-
-            // let authorList = {"liked_authors": []};
-            // $('.author-item').each(function() {
-            //     authorList["authors"].push($(this).attr("id"));
-            // });
-
-            // console.log(bookList)
-            // console.log(authorList)
 
             let results = {"works": [], "authors": [], "required_genres": [], "excluded_genres": []};
             
