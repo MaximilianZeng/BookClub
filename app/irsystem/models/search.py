@@ -58,7 +58,7 @@ def combine_queries(work_ids, auth_ids, work_mat, auth_mat):
 
     for query_author in auth_ids:
         weight = query_author["score"]
-        vector_id = query_auth["auth_id"]
+        vector_id = query_author["auth_id"]
         combined_queries += auth_mat[vector_id]*weight
 
     query_norm = 0
@@ -93,7 +93,7 @@ def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
 
     Returns
     ======
-    results_list: A JSON-formatted list of dictionaries containing K/V pairs for title, author, ranking, book_url, image_url, and description.
+    results_list: A list of dictionaries containing K/V pairs for title, author, ranking, book_url, image_url, and description.
     """
     query_works = []
     negative_query_works = []
@@ -121,4 +121,4 @@ def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
             "description":work_data["description"]
         }
         final_results_list.append(rankings_data_dict)
-    return json.dumps(final_results_list)
+    return final_results_list
