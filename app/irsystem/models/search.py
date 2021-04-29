@@ -103,7 +103,7 @@ def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
     ranked_results = cosine_similarity(joined_queries, eligible, work_mat, auth_mat, positive_query_works, query_works, positive_query_authors)
 
     final_results_list = []
-    for i, result in enumerate(ranked_results[:10]):
+    for i, result in enumerate(ranked_results[:100]):
         work_data = works[ranked_results[i][0]]
         rankings_data_dict = {
             "title":work_data["title"],
