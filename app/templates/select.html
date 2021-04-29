@@ -11,56 +11,162 @@
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../static/select.css">
 </head>
-<body class="container" id="main-container">
+<body>
+    <div id="top-row" class="row">
+        Enter in books and authors each member likes or dislikes, and we’ll find books you’ll all enjoy!
+        <div type="submit" id="submit-button">Submit</div>
+    </div>
+    <div id="genre-row">
+        <!-- 'mystery, thriller, crime', 'fantasy, paranormal', 'non-fiction', 'fiction', 'children', 'history, historical fiction, biography','young-adult','romance' -->
+        <span>Genres</span>
+        <div id="must-have-genre" class="genre-row">
+            <div>Books must be one of :</div>
+            <div class="row">   
+                <div class="generic-genre available-block">mystery, thriller, crime</div>
+                <div class="generic-genre available-block">fantasy, paranormal</div>
+                <div class="generic-genre available-block">non-fiction</div>
+                <div class="generic-genre available-block">fiction</div>
+                <div class="generic-genre available-block">children</div>
+                <div class="generic-genre available-block">history, historical fiction, biography</div>
+                <div class="generic-genre available-block">young-adult</div>
+                <div class="generic-genre available-block">romance</div>
+            </div>
+        </div>
+        <div id="must-not-have-genre" class="genre-row">
+            <div>Books must not be :</div>
+            <div class="row">   
+                <div class="generic-genre available-block">mystery, thriller, crime</div>
+                <div class="generic-genre available-block">fantasy, paranormal</div>
+                <div class="generic-genre available-block">non-fiction</div>
+                <div class="generic-genre available-block">fiction</div>
+                <div class="generic-genre available-block">children</div>
+                <div class="generic-genre available-block">history, historical fiction, biography</div>
+                <div class="generic-genre available-block">young-adult</div>
+                <div class="generic-genre available-block">romance</div>
+            </div>
+        </div>
+    </div>
 	<div id="list-container" class="container-fluid row">
 		<!-- List title -->
-        <section class="col col-10 col-md-10 col-lg-5">
-            <form action="/" method="get">
-                <input type="submit" class="btn btn-primary" value="Back"></button>
-            </form>
+        <section class="col col-10 col-md-10 col-lg-4">
+            <h1>Results</h1>
             <div id="candidate-column"></div>
         </section>
-        <section id="user-block" class="col-10 col-md-10 col-lg-6">
-            <!-- <section class="user-section">
-                <div id="list-title">
+        <section id="user-block">
+
+            <section class="user-section">
+                <div class="list-title">
                     <strong>User</strong>
                 </div>
-                <input type="text" name="" class="form-control new-input" placeholder="Add bookname here">
-                <ul>
-                    <li>
-                        <span class="check-box">
-                            <i class="fa fa-close delete-button"></i>
-                        </span>
-                        <span class="item">
-                            Harry Potter and the Order of Phoenix
-                        </span>
-                    </li>
-                    <li>
-                        <span class="check-box">
-                            <i class="fa fa-close delete-button"></i>
-                        </span>
-                        <span class="item">
-                            The Lord of the Rings
-                        </span>
-                    </li>
-                    <li>
-                        <span class="check-box">
-                            <i class="fa fa-close delete-button"></i>
-                        </span>
-                        <span class="item">
-                            A Game of Thrones
-                        </span>
-                    </li>
-                </ul>
-            </section> -->
-        </section>
-        <section class="col-lg-1" align="right">
-            <button type="submit" class="btn btn-primary" id="next-button">Next</button>
+                <div class="book-area">
+                    <input type="text" name="" class="new-input book-input" placeholder="Add books here:">
+                    <ul>
+                        <li>
+                            <div class="book-item" id="001">
+                                <span class="delete-button">X</span>
+                                Harry Potter and the Order of Phoenix
+                            </div>
+                            <div class="row rating">
+                                <p>Hate</p>
+                                <!-- <div class="clear-float"></div>
+                                <div class="rate">
+                                    <input type="radio" id="star5" name="rate" value="5" />
+                                    <label for="star5" title="text">5 stars</label>
+                                    <input type="radio" id="star4" name="rate" value="4" />
+                                    <label for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" name="rate" value="3" />
+                                    <label for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" name="rate" value="2" />
+                                    <label for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" name="rate" value="1" />
+                                    <label for="star1" title="text">1 star</label>
+                                </div> -->
+                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
+                                <output></output>
+                                <p>Love</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="author-area">
+                    <input type="text" name="" class="new-input author-input" placeholder="Add authors here">
+                    <ul>
+                        <li>
+                            <div class="author-item" id="007">
+                                <span class="delete-button">X</span>
+                                J.K. Rowling
+                            </div>
+                            <div class="row rating">
+                                <p>Hate</p>
+                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
+                                <output></output>
+                                <p>Love</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="add-user-button">Add User</div>
+            </section>
+
+            <section class="user-section">
+                <div class="list-title">
+                    <strong>User</strong>
+                </div>
+                <div class="book-area">
+                    <input type="text" name="" class="new-input book-input" placeholder="Add books here:">
+                    <ul>
+                        <li>
+                            <div class="book-item" id="001">
+                                <span class="delete-button">X</span>
+                                Harry Potter and the Order of Phoenix
+                            </div>
+                            <div class="row rating">
+                                <p>Hate</p>
+                                <!-- <div class="clear-float"></div>
+                                <div class="rate">
+                                    <input type="radio" id="star5" name="rate" value="5" />
+                                    <label for="star5" title="text">5 stars</label>
+                                    <input type="radio" id="star4" name="rate" value="4" />
+                                    <label for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" name="rate" value="3" />
+                                    <label for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" name="rate" value="2" />
+                                    <label for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" name="rate" value="1" />
+                                    <label for="star1" title="text">1 star</label>
+                                </div> -->
+                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
+                                <output></output>
+                                <p>Love</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="author-area">
+                    <input type="text" name="" class="new-input author-input" placeholder="Add authors here">
+                    <ul>
+                        <li>
+                            <div class="author-item" id="007">
+                                <span class="delete-button">X</span>
+                                J.K. Rowling
+                            </div>
+                            <div class="row rating">
+                                <p>Hate</p>
+                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
+                                <output></output>
+                                <p>Love</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="add-user-button">Add User</div>
+            </section>
+
+            
         </section>
 	</div>
 
 	<script>
-
         // Extract number of user from url
         $.urlParam = function(name){
             var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -72,84 +178,238 @@
 
         // Initial setup - add number of user fields according to input
         let num_users = $.urlParam('num_users');
-        for (let i = 0; i < num_users; i++){
-            var new_user = $("<section class=\"user-section\">");
-            new_user.append($("<div id=\"list-title\">").html("<strong>User</strong>"));
-            new_user.append($("<input type=\"text\" name=\"\" class=\"form-control new-input\" placeholder=\"Add bookname here\">"));
-            new_user.append($("<ul></ul>"));
-            $("#user-block").append(new_user.clone());
+        for (let i = 0; i < num_users; i++) {
+            // let list_title = $("<div class=\"list-title\">").html("<strong>User</strong>");
+            // list_title.append($("<input type=\"text\" class=\"author-input\" placeholder=\"Add author here\">"));
+            // list_title.append($("<div class=\"author-results\">"));
+            
+            // let new_user = $("<section class=\"user-section\">");
+            // new_user.append(list_title);
+            // new_user.append($("<input type=\"text\" class=\"form-control book-input\" placeholder=\"Add bookname here\">"));
+            // // new_user.append($("<input type=\"text\" class=\"form-control author-input\" placeholder=\"Add author here\">"));
+            // new_user.append($("<ul></ul>"));
+            // $("#user-block").append(new_user.clone());
+
+            
         }
 
         // index of current user searching
         let currentUser = -1;
 
+        let ifSearchBook = true;
+
         // Adding list of matching book into candidate column on the left
-        $(document).on("input", ".new-input", function() {
+        $(document).on("input", ".book-input", function() {
+            // First, clear author search input
+            $(".user-section").eq(currentUser).children(".author-area").children("input").val("");
+
             var newInput = $(this).val().trim();
-            currentUser = $(this).parent().index();
+            currentUser = $(this).parent().parent().index();
             console.log("Current User: " + currentUser);
+            ifSearchBook = true;
+            console.log("If it's book search: " + ifSearchBook);
+
+            $("#candidate-column").html("");
 
             let books = new Array();
             $.get("/booknames", {partial: newInput}).done(function(value) {
+                booksMap = null;
                 booksMap = jQuery.parseJSON(value);
+                // console.log(booksMap)
+                $("#candidate-column").html("");
                 books = new Array();
-                // booksMap.each(books.add())
-                for (let i = 0; i < booksMap.length; i++) {
+                let num_results = 10;
+                booksMap.length > 10 ? num_results = 10 : num_results = booksMap.length;
+                for (let i = 0; i < num_results; i++) {
                     books.push(booksMap[i]["string"]);
                 };
-                // console.log(booksMap[0]["string"]);
                 $("#candidate-column").html("");
                 let candidates_column = $("<ul>");
-                for (let i = 0; i < booksMap.length; i++) {
-                    candidates_column.append($("<li class=\"candidate\" id=\"" + booksMap[i]['work_id'] + "\">").html(booksMap[i]["string"]));
+                let column_size = booksMap.length > 10 ? 10 : booksMap.length
+                for (let i = 0; i < column_size; i++) {
+                    // candidates_column.append($("<li class=\"candidate\" id=\"" + booksMap[i]['work_id'] + "\">").html(booksMap[i]["string"]));
+                    var book_display = $("<div class=\"book\" id=\"" + booksMap[i]['work_id'] + "\">");
+                    var img = $("<img class=\"book-cover\"src=\"" + booksMap[i]['image'] + "\">");
+                    book_display.append(img);
+                    var title = $("<h2 class=\"book-title\">");
+                    title.append(booksMap[i]['string']);
+                    book_display.append(title);
+
+                    // book_link.append(book_display.clone());
+                    candidates_column.append(book_display);
+                }
+                $("#candidate-column").append(candidates_column);
+            });
+        });
+
+        // Adding list of authors in the search results column
+        $(document).on("input", ".author-input", function() {
+            // First, clear book search input
+            $(".user-section").eq(currentUser).children(".book-area").children("input").val("");
+
+            var newInput = $(this).val().trim();
+            currentUser = $(this).parent().parent().index();
+            // console.log(newInput);
+            console.log("Current User: " + currentUser);
+            ifSearchBook = false;
+            console.log("Current search: " + ifSearchBook);
+
+            $("#candidate-column").html("");
+
+            let books = new Array();
+            $.get("/authornames", {partial: newInput}).done(function(value) {
+                authorsMap = jQuery.parseJSON(value);
+
+                $("#candidate-column").html("");
+                let candidates_column = $("<ul>");
+                let column_size = authorsMap.length > 10 ? 10 : authorsMap.length
+                for (let i = 0; i < column_size; i++) {
+                    candidates_column.append($("<li class=\"author\" id=\"" + authorsMap[i]['author_id'] + "\">").html(authorsMap[i]["name"]));
                 }
                 $("#candidate-column").append(candidates_column);
             });
         });
 
         // Add selected book into the last user's book list
-        $(document).on("click", "#candidate-column li", function() {
-            let bookName = $(this).html();
+        $(document).on("click", "#candidate-column .book", function() {
+            let bookName = $(this).children("h2").html();
+            console.log(bookName);
             let bookWorkID = $(this).attr("id");
 
             let userBookList = new Array();
-            $(".user-section").eq(currentUser).children("ul").children("li").children(".item").each(function() {
+            $(".user-section").eq(currentUser).children(".book-area").children("ul").children("li").children(".book-item").each(function() {
                 userBookList.push($(this).attr("id"));
             });
 
+            console.log(userBookList);
+
+            // if (!userBookList.includes(bookWorkID)){
+            //     let li_input = $("<li>");
+            //     li_input.append($("<span class='check-box'>").html("<i class=\"fa fa-close delete-button\"></i>"));
+            //     li_input.append($("<span class='book-item' id=\'" + bookWorkID + "\'> ").append(bookName));
+            //     li_input.append($("<input type=\"range\" value=\"0\" min=\"-5\" max=\"5\" step=\"1\" oninput=\"this.nextElementSibling.value = this.value\"><output>0</output>"))
+            //     $(".user-section").eq(currentUser).children("ul").append(li_input);
+
+            //     $(".user-section").eq(currentUser).children("input").val("");
+            //     $("#candidate-column").html("");
+            // } else {
+            //     alert("Book already in list");
+            // }
+
             if (!userBookList.includes(bookWorkID)){
                 let li_input = $("<li>");
-                li_input.append($("<span class='check-box'>").html("<i class=\"fa fa-close delete-button\"></i>"));
-                li_input.append($("<span class='item' id=\'" + bookWorkID + "\'> ").append(bookName));
-                var user_section = $(".user-section").eq(currentUser);
-                $(".user-section").eq(currentUser).children("ul").append(li_input);
-                $(".user-section").eq(currentUser).children("input").val("");
-                $("#candidate-column").children("ul").html("");
+                li_input.append($("<div class=\"book-item\" id=\'" + bookWorkID + "\'>").html("<span class=\"delete-button\">X</span>").append(bookName));
+
+                // let stars = $("<div class=\"rate\">").html("<input type='radio' id='star5' name='rate' value='5' /><label for='star5' title='text'>5 stars</label>");
+                // stars.append($("<input type='radio' id='star4' name='rate' value='4' /><label for='star4' title='text'>4 stars</label>"));
+                // stars.append($("<input type='radio' id='star3' name='rate' value='3' /><label for='star3' title='text'>3 stars</label>"));
+                // stars.append($("<input type='radio' id='star2' name='rate' value='2' /><label for='star2' title='text'>2 stars</label>"));
+                // stars.append($("<input type='radio' id='star1' name='rate' value='1' /><label for='star1' title='text'>1 stars</label>"));
+                
+                // let rating_row = $("<div class='row rating'>").html("<p>Hate</p><div class='clear-float'></div>");
+                // rating_row.append(stars);
+                // rating_row.append($("<p>Love</p>"))
+                li_input.append($("<div class='row rating'>").html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.value = this.value'><output></output><p>Love</p>"));
+                
+                // li_input.append(rating_row);
+
+                $(".user-section").eq(currentUser).children(".book-area").children("ul").append(li_input);
+
+                $(".user-section").eq(currentUser).children(".book-area").children("input").val("");
+                $("#candidate-column").html("");
             } else {
                 alert("Book already in list");
             }
         });
 
+        // Add selected author into the last user's author list
+        $(document).on("click", "#candidate-column .author", function() {
+            let authorName = $(this).html();
+            console.log(authorName);
+            let authorID = $(this).attr("id");
+            console.log(authorID);
+
+            let userAuthorList = new Array();
+            $(".user-section").eq(currentUser).children(".author-area").children("ul").children("li").children(".author-item")
+                .each(function() {
+                    userAuthorList.push($(this).attr("id"));
+            });
+
+            // console.log(userAuthorList);
+
+            if (!userAuthorList.includes(authorID)){
+                let li_input = $("<li>");
+                li_input.append($("<div class=\"author-item\" id=\'" + authorID + "\'>").html("<span class=\"delete-button\">X</span>").append(authorName));
+                li_input.append($("<div class='row rating'>").html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.value = this.value'><output></output><p>Love</p>"));
+                
+                // li_input.append(rating_row);
+
+                $(".user-section").eq(currentUser).children(".author-area").children("ul").append(li_input);
+
+                $(".user-section").eq(currentUser).children(".author-area").children("input").val("");
+                $("#candidate-column").html("");
+            } else {
+                alert("Author already in list");
+            }
+        });
+
         // Remove book from book list
-		$(document).on("click", ".check-box", function() {
-			$(this).next().addClass("item-toggle");
-			$(this).parent().fadeToggle(500, function() {
+		$(document).on("click", ".delete-button", function() {
+			$(this).parent().addClass("item-toggle");
+			$(this).parent().parent().fadeToggle(500, function() {
 				$(this).toggleClass("item-toggle");
 				$(this).remove();
 			});
 		});
 
-        $("#next-button").on("click", function() {
-            var bookList = {"liked_works" : []};
+        $(document).on("click", "#must-have-genre .available-block", function() {
+            $(this).toggleClass("must-have-selected");
+            index = $(this).index();
+            $("#must-not-have-genre .row .generic-genre").eq(index).toggleClass("available-block");
+        })
 
-            $('.item').each(function() {
-                bookList["liked_works"].push($(this).attr("id"));
+        $(document).on("click", "#must-not-have-genre .available-block", function() {
+            $(this).toggleClass("must-not-have-selected");
+            index = $(this).index();
+            $("#must-have-genre .row .generic-genre").eq(index).toggleClass("available-block");
+        })
+
+        $("#submit-button").on("click", function() {
+
+            let results = {"works": [], "authors": [], "required_genres": [], "excluded_genres": []};
+            
+            $('.book-item').each(function() {
+                let book_dict = {};
+                let id = $(this).attr("id");
+                let scale = $(this).siblings(".rating").children("input").val().toString();
+                book_dict[id] = scale;
+                results["works"].push(book_dict);
             });
+
+            $('.author-item').each(function() {
+                let author_dict = {};
+                let id = $(this).attr("id");
+                let scale = $(this).siblings(".rating").children("input").val().toString();
+                author_dict[id] = scale;
+                results["authors"].push(author_dict);
+            });
+
+            let required_genres = $('#required-genre').val();
+
+            $('.must-have-selected').each(function() {
+                results["required_genres"].push($(this).html());
+            });
+
+            $('.must-not-have-selected').each(function() {
+                results["excluded_genres"].push($(this).html());
+            });
+
+            // console.log(results);
 
             $.ajax({
                 type: 'post',
                 url: '/result',
-                data: JSON.stringify(bookList),
+                data: JSON.stringify(results),
                 contentType: "application/json; charset=utf-8",
                 traditional: true,
                 success: function (data) {

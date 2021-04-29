@@ -12,11 +12,41 @@
 	<link rel="stylesheet" type="text/css" href="../static/result.css">
 </head>
 <body>
-    <h1>Here's what you should read next!</h1>
-    <div id="bookDisplay">
+    <div id="pageDisplay">
+        <h1>Here's what you should read next!</h1>
+        <div id="bookDisplay">
+        </div>
     </div>
 
     <script>
+        const gen_inspect_page = (book) => {
+            const book_inspect_bg = $("<div class=\"book-inspect-bg\">");
+            const book_inspect = $("<div class=\"book-inspect\">");
+            var close_button = $("<button type=\"button\" class=\"book-inspect-close\">X</button>");
+            $(close_button).click(() => {
+                $(book_inspect_bg).hide();
+            });
+            book_inspect.append(close_button);
+            var img = $("<img class=\"book-cover\"src=\"" + book.image_url + "\">");
+            book_inspect.append(img);
+            var title = $("<h2 class=\"book-title\">");
+            title.append(book.title);
+            book_inspect.append(title);
+            var author = $("<h3 class=\"book-author\">");
+            author.append(book.author ? book.author[0] : "Author Not Found");
+            book_inspect.append(author);
+            var sumTitle = $("<h3 class=\"book-summary-heading\">Summary</h3>");
+            var summary = $("<div class=\"book-summary\">");
+            summary.append(sumTitle);
+            summary.append(book.description);
+            book_inspect.append(summary);
+            var seemore = $("<a class=\"book-link\" href=\"" + book.book_url + "\">See more on Goodreads</a>");
+            book_inspect.append(seemore);
+            book_inspect_bg.append(book_inspect);
+            
+            return book_inspect_bg;
+        }
+
         $(function() {
             var data = sessionStorage.getItem("result");
             if(data) {
@@ -26,27 +56,34 @@
                 var book_data = JSON.parse(data_string);
                 console.log(book_data);
                 var all_books = $("<div class=\"all-books\">");
-                for(var i = 0; i < 10; i++) {
+                for (var i = 0; i < book_data.length; i++) {
                     var book = book_data[i];
                     console.log(book);
-                    var book_link = $("<a class=\"book-link\" href=\"" + book.book_url + "\"" + "target=\"_blank\">");
                     var book_display = $("<div class=\"book\">");
+                    var book_ranking = $("<div class=\"book-rank\">");
+                    book_ranking.append(book.ranking);
+                    book_display.append(book_ranking);
                     var img = $("<img class=\"book-cover\"src=\"" + book.image_url + "\">");
-                    book_display.append(img.clone());
+                    book_display.append(img);
                     var title = $("<h2 class=\"book-title\">");
                     title.append(book.title);
-                    book_display.append(title.clone());
+                    book_display.append(title);
                     var author = $("<h3 class=\"book-author\">");
                     author.append(book.author ? book.author[0] : "Author Not Found");
-                    book_display.append(author.clone());
+                    book_display.append(author);
                     var summary = $("<div class=\"book-summary\">");
                     summary.append(book.description);
-                    book_display.append(summary.clone());
+                    book_display.append(summary);
 
-                    book_link.append(book_display.clone());
-                    all_books.append(book_link.clone());
+                    const book_inspect = gen_inspect_page(book);
+                    $(book_display).click(() => {
+                        $(book_inspect).show();
+                    });
+                    $("#pageDisplay").append(book_inspect);
+
+                    all_books.append(book_display);
                 }
-                $("#bookDisplay").append(all_books.clone());
+                $("#bookDisplay").append(all_books);
             }
             else {
                 console.log("No results found!");
