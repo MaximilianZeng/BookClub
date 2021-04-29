@@ -2,7 +2,7 @@ import math
 import json
 from collections import defaultdict
 import numpy as np
-def cosine_similarity(joined_queries, eligible, work_mat, query_works, negative_query_works):
+def cosine_similarity(joined_queries, eligible, work_mat, positive_query_works, negative_query_works, positive_query_authors, negative_query_authors):
     """Returns a list of work ids ranked by similarity to a query. Does not use formal cosine similarity due to the omission of normalizing by the doc norm. 
 
     Arguments
@@ -23,13 +23,18 @@ def cosine_similarity(joined_queries, eligible, work_mat, query_works, negative_
             results.append((i, similarity_scores[i]))
         if len(results)==100:
             break
-           
+    if len(positive_query_works) == 0 and len(positive_query_authors) == 0:
+        return results       
+
     reordered_results = []
     for work, score in results:
         cosine_sims = []
         for query in query_works:
             if query not in negative_query_works:
                 cosine_sims.append(np.dot(work_mat[query], work_mat[work]))
+        for query in query_authors:
+            if query not in negative_query_author:
+                cosine_sims.append(np.dot(auth_mat[query], work_mat[work]))
         reordered_results.append((work, np.min(np.array(cosine_sims))))
         reordered_results.sort(key=lambda x: x[1], reverse=True)
     return reordered_results
@@ -65,7 +70,11 @@ def combine_queries(work_ids, auth_ids, work_mat, auth_mat):
     for val in combined_queries:
         query_norm+=val**2
     query_norm = query_norm**0.5
-    return combined_queries/query_norm
+
+    if query_norm<0.0000001:
+        return combined_queries
+    else:
+        return combined_queries/query_norm
 
 def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
     """Returns a dictionary of terms and tf-idf values representing the combined result of individual queries
@@ -81,32 +90,29 @@ def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
     ======
     results_list: A JSON-formatted list of dictionaries containing K/V pairs for title, author, ranking, book_url, image_url, and description.
     """
-def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
-    """Returns a dictionary of terms and tf-idf values representing the combined result of individual queries
-
-    Arguments
-    =========
-
-    work_ids: list,
-        A list of works in the query
-
-
-    Returns
-    ======
-    results_list: A JSON-formatted list of dictionaries containing K/V pairs for title, author, ranking, book_url, image_url, and description.
-    """
-    query_works = []
+    positive_query_works = []
     negative_query_works = []
+    positive_query_authors = []
+    negative_query_authors = []
     for query in work_ids:
-        query_works.append(query["work_id"])
+        if query["score"] > 0:
+            positive_query_works.append(query)
         if query["score"] < 0:
             negative_query_works.append(query)
+
+    for query in auth_ids:
+        if query["score"] > 0:
+            positive_query_authors.append(query)
+        if query["score"] < 0:
+            negative_query_authors.append(query)
+
+
     joined_queries = combine_queries(work_ids, auth_ids, work_mat, auth_mat)
-    ranked_results = cosine_similarity(joined_queries, eligible, work_mat, query_works, negative_query_works)
+    ranked_results = cosine_similarity(joined_queries, eligible, work_mat, positive_query_works, negative_query_works, positive_query_authors, negative_query_authors)
     #Removing the query books from the ranking
     corrected_results = []
     for result in ranked_results:
-        if result[0] not in query_works:
+        if result[0] not in positive_query_works or result[0] not in negative_query_works:
             corrected_results.append(result)
 
     final_results_list = []
