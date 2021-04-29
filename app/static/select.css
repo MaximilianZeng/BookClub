@@ -40,7 +40,18 @@ ul li:hover {
     padding-left: 5%;
 }
 
+.remove-user-button {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+}
+
+.remove-user-button:hover {
+    cursor: pointer;
+}
+
 .user-section {
+    position: relative;
     max-height: 500px;
     width: 350px;
     margin: 30px;
@@ -62,7 +73,7 @@ ul li:hover {
 }
 
 .book-area {
-    width: 85%;
+    width: 89%;
     height: 200px;
     margin: 6% auto 3% 20px;
     text-overflow: ellipsis;
@@ -73,7 +84,7 @@ ul li:hover {
 .book-area > input {
     border:0;
     outline:0;
-    width: 100%;
+    width: 90%;
     border-bottom: 1px solid black;
     background: transparent;
     display: inline;
@@ -86,7 +97,7 @@ ul li:hover {
 }
 
 .author-area {
-    width: 85%;
+    width: 89%;
     height: 180px;
     margin: 6% auto 3% 20px;
     text-overflow: ellipsis;
@@ -117,47 +128,58 @@ ul li:hover {
     font-weight: bold;
 }
 
-.rate {
-    float: left;
-    height: 30px;
-    padding: 0 10px;
-}
-.rate:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-}
-.rate:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size: 18px;
-    color:#ccc;
-}
-.rate:not(:checked) > label:before {
-    content: '★ ';
-}
-.rate > input:checked ~ label {
-    color: #2e2e2e;    
-}
-.rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
-    color: #2e2e2e;  
-}
-.rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
-    color: #2e2e2e;
+.rating {
+    margin-top: 10px;
 }
 
 .rating > p {
     font-size: 8pt;
     font-weight: 300;
-    margin-top: 7px;
+    /* margin-top: auto; */
     margin-bottom: 0;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    margin: 5px 10px 0 10px;
+    height: 10px;
+    border-radius: 5px;  
+    opacity: 0.7;
+    background: #d3d3d3;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    outline: none;
+}
+
+input[type=range]:hover {
+    opacity: 1;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background: #1d1d1d;
+    cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background: #1d1d1d;
+    cursor: pointer;
+}
+
+.rating-output {
+    margin-left: 20%;
+    margin-top: -4px;
+    font-size: 11pt;
+    color: #383838;
 }
 
 strong:first-child {
@@ -178,6 +200,7 @@ strong:first-child {
     cursor: pointer;
     color: rgb(190, 16, 16);
     right: 0;
+    margin-right: 3%;
 }
 
 #delete-button:hover {
@@ -333,24 +356,28 @@ a:hover {
 }
 
 #user-block {
-    display: grid;
-    grid-template-columns: 500px 500px;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-template-rows: 600px; */
+    grid-template-rows: repeat(auto-fill, 600px);
     grid-gap: 10px;
 }
 
 #add-user-button {
     position: fixed;
-    right: 2vw;
-    bottom: 2vw;
-    padding: 10px 13px 10px 13px;
+    right: 3vw;
+    bottom: 5vw;
+    padding: 10px 20px 10px 20px;
     font-size: 19pt;
     font-weight: bold;
-    background: #af9e7e;
-    border-radius: 15px;
+    background: #1f1f1f;
+    border-radius: 35px;
     color: rgb(255, 255, 255);
+    z-index: 100;
 }
 
 #add-user-button:hover {
+    background: #3f3f3f;
     box-shadow: 1px 2px 10px #888888;
     cursor: pointer;
 }

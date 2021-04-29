@@ -53,8 +53,9 @@
             <div id="candidate-column"></div>
         </section>
         <section id="user-block">
-
-            <section class="user-section">
+            <div id="add-user-button">Add User</div>
+            <!-- <section class="user-section">
+                <img class="remove-user-button" src="/static/assets/delete_icon.png" alt="X" width="40" height="40">
                 <div class="list-title">
                     <strong>User</strong>
                 </div>
@@ -63,27 +64,16 @@
                     <ul>
                         <li>
                             <div class="book-item" id="001">
-                                <span class="delete-button">X</span>
+                                <span class="delete-button">
+                                    <img src="/static/assets/cross_icon.png" alt="X" width="25" height="25">
+                                </span>
                                 Harry Potter and the Order of Phoenix
                             </div>
                             <div class="row rating">
                                 <p>Hate</p>
-                                <!-- <div class="clear-float"></div>
-                                <div class="rate">
-                                    <input type="radio" id="star5" name="rate" value="5" />
-                                    <label for="star5" title="text">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" />
-                                    <label for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" />
-                                    <label for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2" />
-                                    <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1" />
-                                    <label for="star1" title="text">1 star</label>
-                                </div> -->
-                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
-                                <output></output>
+                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.nextElementSibling.value = this.value">
                                 <p>Love</p>
+                                <output class="rating-output">5</output>
                             </div>
                         </li>
                     </ul>
@@ -93,105 +83,53 @@
                     <ul>
                         <li>
                             <div class="author-item" id="007">
-                                <span class="delete-button">X</span>
+                                <span class="delete-button">
+                                    <img src="/static/assets/cross_icon.png" alt="X" width="25" height="25">
+                                </span>
                                 J.K. Rowling
                             </div>
                             <div class="row rating">
                                 <p>Hate</p>
-                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
-                                <output></output>
+                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.nextElementSibling.value = this.value">
                                 <p>Love</p>
+                                <output class="rating-output">5</output>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <div id="add-user-button">Add User</div>
-            </section>
+                
+            </section> -->
 
-            <section class="user-section">
-                <div class="list-title">
-                    <strong>User</strong>
-                </div>
-                <div class="book-area">
-                    <input type="text" name="" class="new-input book-input" placeholder="Add books here:">
-                    <ul>
-                        <li>
-                            <div class="book-item" id="001">
-                                <span class="delete-button">X</span>
-                                Harry Potter and the Order of Phoenix
-                            </div>
-                            <div class="row rating">
-                                <p>Hate</p>
-                                <!-- <div class="clear-float"></div>
-                                <div class="rate">
-                                    <input type="radio" id="star5" name="rate" value="5" />
-                                    <label for="star5" title="text">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" />
-                                    <label for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" />
-                                    <label for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2" />
-                                    <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1" />
-                                    <label for="star1" title="text">1 star</label>
-                                </div> -->
-                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
-                                <output></output>
-                                <p>Love</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="author-area">
-                    <input type="text" name="" class="new-input author-input" placeholder="Add authors here">
-                    <ul>
-                        <li>
-                            <div class="author-item" id="007">
-                                <span class="delete-button">X</span>
-                                J.K. Rowling
-                            </div>
-                            <div class="row rating">
-                                <p>Hate</p>
-                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.value = this.value">
-                                <output></output>
-                                <p>Love</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div id="add-user-button">Add User</div>
-            </section>
-
-            
         </section>
 	</div>
 
 	<script>
-        // Extract number of user from url
-        $.urlParam = function(name){
-            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-            if (results==null) {
-            return null;
-            }
-            return decodeURI(results[1]) || 0;
-        }
 
-        // Initial setup - add number of user fields according to input
-        let num_users = $.urlParam('num_users');
+        // Initial setup - add default number of user
+        let num_users = 2;
         for (let i = 0; i < num_users; i++) {
-            // let list_title = $("<div class=\"list-title\">").html("<strong>User</strong>");
-            // list_title.append($("<input type=\"text\" class=\"author-input\" placeholder=\"Add author here\">"));
-            // list_title.append($("<div class=\"author-results\">"));
-            
-            // let new_user = $("<section class=\"user-section\">");
-            // new_user.append(list_title);
-            // new_user.append($("<input type=\"text\" class=\"form-control book-input\" placeholder=\"Add bookname here\">"));
-            // // new_user.append($("<input type=\"text\" class=\"form-control author-input\" placeholder=\"Add author here\">"));
-            // new_user.append($("<ul></ul>"));
-            // $("#user-block").append(new_user.clone());
-
-            
+            addUser();
         }
+
+        function addUser() {
+            let user_section = $("<section class='user-section'>").html("<img class='remove-user-button' src='/static/assets/delete_icon.png' alt='X' width='40' height='40'>");
+            user_section.append($("<div class='list-title'><strong>User</strong></div>"));
+            user_section.append($("<div class='book-area'>").html("<input type='text' class='new-input book-input' placeholder='Add books here:'><ul>"));
+            user_section.append($("<div class='author-area'>").html("<input type='text' class='new-input author-input' placeholder='Add authors here:'><ul>"));
+            $("#user-block").append(user_section);
+        };
+
+        $("#add-user-button").on('click', function() {
+            addUser();
+        });
+
+        // Remove user
+        $(document).on("click", ".remove-user-button", function() {
+            $(this).parent().fadeToggle(400, function() {
+				$("#candidate-column").html("");
+				$(this).remove();
+			});
+        });
 
         // index of current user searching
         let currentUser = -1;
@@ -201,13 +139,22 @@
         // Adding list of matching book into candidate column on the left
         $(document).on("input", ".book-input", function() {
             // First, clear author search input
-            $(".user-section").eq(currentUser).children(".author-area").children("input").val("");
-
             var newInput = $(this).val().trim();
-            currentUser = $(this).parent().parent().index();
+            currentUser = $(this).parent().parent().index()-1;
             console.log("Current User: " + currentUser);
             ifSearchBook = true;
             console.log("If it's book search: " + ifSearchBook);
+
+            $(".user-section").each(function() {
+                
+                let index = $(this).index() - 1;
+                
+                if(index != currentUser){
+                    console.log(index)
+                    $(".user-section").eq(index).children(".book-area").children("input").val("");
+                }
+                $(".user-section").eq(currentUser).children(".author-area").children("input").val("");
+            });
 
             $("#candidate-column").html("");
 
@@ -244,15 +191,22 @@
 
         // Adding list of authors in the search results column
         $(document).on("input", ".author-input", function() {
-            // First, clear book search input
-            $(".user-section").eq(currentUser).children(".book-area").children("input").val("");
-
+            
             var newInput = $(this).val().trim();
-            currentUser = $(this).parent().parent().index();
+            currentUser = $(this).parent().parent().index()-1;
             // console.log(newInput);
             console.log("Current User: " + currentUser);
             ifSearchBook = false;
             console.log("Current search: " + ifSearchBook);
+
+            $(".user-section").each(function() {
+                let index = $(this).index() - 1;
+                if(index != currentUser){
+                    console.log(index)
+                    $(".user-section").eq(index).children(".author-area").children("input").val("");
+                }
+                $(".user-section").eq(currentUser).children(".book-area").children("input").val("");
+            });
 
             $("#candidate-column").html("");
 
@@ -281,37 +235,15 @@
                 userBookList.push($(this).attr("id"));
             });
 
-            console.log(userBookList);
-
-            // if (!userBookList.includes(bookWorkID)){
-            //     let li_input = $("<li>");
-            //     li_input.append($("<span class='check-box'>").html("<i class=\"fa fa-close delete-button\"></i>"));
-            //     li_input.append($("<span class='book-item' id=\'" + bookWorkID + "\'> ").append(bookName));
-            //     li_input.append($("<input type=\"range\" value=\"0\" min=\"-5\" max=\"5\" step=\"1\" oninput=\"this.nextElementSibling.value = this.value\"><output>0</output>"))
-            //     $(".user-section").eq(currentUser).children("ul").append(li_input);
-
-            //     $(".user-section").eq(currentUser).children("input").val("");
-            //     $("#candidate-column").html("");
-            // } else {
-            //     alert("Book already in list");
-            // }
+            // console.log(userBookList);
 
             if (!userBookList.includes(bookWorkID)){
                 let li_input = $("<li>");
-                li_input.append($("<div class=\"book-item\" id=\'" + bookWorkID + "\'>").html("<span class=\"delete-button\">X</span>").append(bookName));
-
-                // let stars = $("<div class=\"rate\">").html("<input type='radio' id='star5' name='rate' value='5' /><label for='star5' title='text'>5 stars</label>");
-                // stars.append($("<input type='radio' id='star4' name='rate' value='4' /><label for='star4' title='text'>4 stars</label>"));
-                // stars.append($("<input type='radio' id='star3' name='rate' value='3' /><label for='star3' title='text'>3 stars</label>"));
-                // stars.append($("<input type='radio' id='star2' name='rate' value='2' /><label for='star2' title='text'>2 stars</label>"));
-                // stars.append($("<input type='radio' id='star1' name='rate' value='1' /><label for='star1' title='text'>1 stars</label>"));
-                
-                // let rating_row = $("<div class='row rating'>").html("<p>Hate</p><div class='clear-float'></div>");
-                // rating_row.append(stars);
-                // rating_row.append($("<p>Love</p>"))
-                li_input.append($("<div class='row rating'>").html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.value = this.value'><output></output><p>Love</p>"));
-                
-                // li_input.append(rating_row);
+                li_input.append($("<div class='book-item' id=\'" + bookWorkID + "\'>")
+                    .html("<span class=\"delete-button\"><img src=\"/static/assets/cross_icon.png\" alt='X' width='25' height='25'></span>")
+                    .append(bookName));
+                li_input.append($("<div class='row rating'>")
+                    .html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.nextElementSibling.value = this.value'><p>Love</p><output class='rating-output'>5</output>"));
 
                 $(".user-section").eq(currentUser).children(".book-area").children("ul").append(li_input);
 
@@ -339,10 +271,11 @@
 
             if (!userAuthorList.includes(authorID)){
                 let li_input = $("<li>");
-                li_input.append($("<div class=\"author-item\" id=\'" + authorID + "\'>").html("<span class=\"delete-button\">X</span>").append(authorName));
-                li_input.append($("<div class='row rating'>").html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.value = this.value'><output></output><p>Love</p>"));
-                
-                // li_input.append(rating_row);
+                li_input.append($("<div class=\"author-item\" id=\'" + authorID + "\'>")
+                    .html("<span class=\"delete-button\"><img src=\"/static/assets/cross_icon.png\" alt='X' width='25' height='25'></span>")
+                    .append(authorName));
+                li_input.append($("<div class='row rating'>")
+                    .html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.nextElementSibling.value = this.value'><p>Love</p><output class='rating-output'>5</output>"));
 
                 $(".user-section").eq(currentUser).children(".author-area").children("ul").append(li_input);
 
@@ -374,8 +307,8 @@
             $("#must-have-genre .row .generic-genre").eq(index).toggleClass("available-block");
         })
 
+        // Submit the pages
         $("#submit-button").on("click", function() {
-
             let results = {"works": [], "authors": [], "required_genres": [], "excluded_genres": []};
             
             $('.book-item').each(function() {
@@ -404,7 +337,7 @@
                 results["excluded_genres"].push($(this).html());
             });
 
-            // console.log(results);
+            console.log(results);
 
             $.ajax({
                 type: 'post',
