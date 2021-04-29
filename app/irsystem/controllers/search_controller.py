@@ -60,20 +60,6 @@ def _get_author_from_partial(auth_str):
 			break
 	return relv_auths
 
-def fake_results():
-	return [
-		{
-			"title": "abc"+str(i),
-			"author": "asdfa",
-			"ranking": i,
-			"book_url": "https://www.goodreads.com/book/show/862041.Harry_Potter_Boxset",
-			"image_url": "https://images.gr-assets.com/books/1392579059m/862041.jpg",
-			"description": "this book is about..." + "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."*3,
-			"genres": ["fantasy", "whatever"]
-		}
-		for i in range(20)
-	]
-
 def rescore(inputs, idid):
 	"""Given some inputs in form [{work_id: stars}], rescale and
 	return rescored inpust in form [{`idid`: work_id, "score": score}]"""
@@ -96,11 +82,8 @@ def _get_reccs(work_ids, auth_ids, desired_genres, excluded_genres):
 		# # Logical AND and logical NOT:
 		# if set(work['genres']).issubset(req) and set(work['genres']).isdisjoint(exc):
 		# # Logical OR and logical NOT:
-		if set(work['genres'])&des and set(work['genres']).isdisjoint(exc):
+		if (set(work['genres'])&des or len(desired_genres)==0) and set(work['genres']).isdisjoint(exc):
 			eligible.append(i)
-		elif len(desired_genres)==0 and set(work['genres']).isdisjoint(exc):
-			eligible.append(i)
-	# return fake_results() # TODO remove once get_doc_rankings is updated
 	return get_doc_rankings(
 		work_ids,
 		eligible,
@@ -139,31 +122,12 @@ def get_reccs():
 	req = json.loads(request.data)
 	works = req.get('works') # list of dicts: [{work_id: 234, stars: 2}, ...]
 	works_rescored = rescore(works, "work_id")
-
-	# works_rescored = []
-	# for w in works:
-	# 	wid, stars = list(w.items())[0]
-	# 	if type(wid)==str:
-	# 		wid = int(wid)
-	# 	if type(stars)==str:
-	# 		stars = int(stars)
-	# 	works_rescored.append({"work_id": wid, "score": rescale.get(stars, 0)})
 	authors = req.get('authors')
 	authors_rescored = rescore(authors, "auth_id")
-	# authors_rescored = []
-	# for a in authors:
-	# 	aid, stars = list(a.items())[0]
-	# 	if type(aid)==str:
-	# 		aid = int(aid)
-	# 	if type(stars)==str:
-	# 		stars = int(stars)
-	# 	authors_rescored.append({"auth_id": aid, "score": rescale.get(stars, 0)})
 	req_genres = req.get('required_genres', [])
 	ex_genres = req.get('excluded_genres', [])
 
-	print(works_rescored, authors_rescored, req_genres, ex_genres)
 	results = _get_reccs(works_rescored, authors_rescored, req_genres, ex_genres)
-	# print(results)
 	return json.dumps(results)
 
 
