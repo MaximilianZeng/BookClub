@@ -1,5 +1,15 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.row {
+    margin-left: 0;
+}
+
 body {
-	background-color: #f3f2e7;
+    padding: 0 ! important;
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
@@ -10,67 +20,169 @@ ul {
 
 ul li {
 	list-style-type: none;
-	border: 1px solid lightgrey;
-	height: 35px;
-	padding-top: 5px;
-	padding-left: 20px;
-	background-color: lightgrey;
+	padding: 11px 0 11px 13px;
+    margin: 2px 0 2px 0;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 ul li:hover {
-	background-color: #55565A;
-	color: #FFFFFF;
-	height: 39px;
-	font-size: 13pt;
-	padding-top: 3px;
-	cursor: pointer;
+	background-color: rgba(100, 100, 100, 0.1);
+    border-radius: 8px;
 }
 
-#list-container{
-	margin-top: 5%;
-}
-
-#list-title {
-	background-color: #ebdc87;
-	height: 70px;
-	font-size: 25pt;
-	color: #222222;
-	padding-left: 3%;
-	padding-top: 1%;
-    flex-direction: row;
-    width: 100%;
-    align-items: space-between;
-}
-
-/* .candidate-column ul li {
-    overflow: hidden;    
-} */
-
-/* #user-block {
-	box-shadow: 1px 2px 10px #888888;
-} */
-
-/* .add-form {
-	display: none;
-}
-
-.add-form.closed {
-	max-height: 0;
-} */
-
-#delete-button:hover {
+#candidate-column ul li {
     cursor: pointer;
 }
 
+#list-container{
+	margin-top: 3%;
+    padding-left: 5%;
+}
+
 .user-section {
+    max-height: 500px;
+    width: 350px;
     margin: 30px;
     box-shadow: 1px 2px 10px #888888;
+    background-color: #FAFAFA;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}
+
+.list-title {
+	background-color: #af9e7e;
+	color: #ffffff;
+	padding: 2% 1% 2% 5%;
+    flex-direction: row;
+    width: 100%;
+    align-items: space-between;
+    flex-direction: row;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.book-area {
+    width: 85%;
+    height: 200px;
+    margin: 6% auto 3% 20px;
+    text-overflow: ellipsis;
+    overflow-x: auto;
+    overflow-y: scroll;
+}
+
+.book-area > input {
+    border:0;
+    outline:0;
+    width: 100%;
+    border-bottom: 1px solid black;
+    background: transparent;
+    display: inline;
+    margin-left: 15px;
+}
+
+.book-area > input:focus {
+    border-bottom: 1px solid black;
+    background: transparent;
+}
+
+.author-area {
+    width: 85%;
+    height: 180px;
+    margin: 6% auto 3% 20px;
+    text-overflow: ellipsis;
+    overflow-x: auto;
+    overflow-y: scroll;
+}
+
+.author-area > input {
+    border:0;
+    outline:0;
+    width: 90%;
+    border-bottom: 1px solid black;
+    background: transparent;
+    display: inline;
+    margin-left: 15px;
+}
+
+.author-area > input:focus {
+    border-bottom: 1px solid black;
+    background: transparent;
+}
+
+
+.book-item {
+    padding-bottom: 5px;
+    width: 100%;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+.rate {
+    float: left;
+    height: 30px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size: 18px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #2e2e2e;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #2e2e2e;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #2e2e2e;
+}
+
+.rating > p {
+    font-size: 8pt;
+    font-weight: 300;
+    margin-top: 7px;
+    margin-bottom: 0;
+}
+
+strong:first-child {
+    font-size: 25pt;
+    margin-right: 2%;
+}
+
+.author-results {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.clear-float {
+    clear: both;
 }
 
 .delete-button {
-    position: relative;
+    cursor: pointer;
+    color: rgb(190, 16, 16);
     right: 0;
+}
+
+#delete-button:hover {
+    cursor: pointer;
+    color: red;
 }
 
 .item-toggle {
@@ -91,7 +203,148 @@ ul li:hover {
     cursor: pointer;
 }
 
-#next-button {
-    position: absolute;
-    top: 0;
+#top-row {
+    padding: 30px 30px 30px 30px;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+#submit-button {
+    padding: 5px 25px 5px 25px;
+    background: black;
+    border-radius: 25px;
+    color: white;
+    font-size: 15pt;
+    font-weight: bold;
+}
+
+#submit-button:hover {
+    background: rgb(53, 53, 53);
+    cursor: pointer;
+}
+
+#genre-row  {
+    padding: 30px 40px 30px 70px;
+    background-color: rgb(251 247 236);
+}
+
+#genre-row span {
+    font-size: 25pt;
+    font-weight: bold;
+}
+
+.genre-row {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.generic-genre {
+    padding: 5px 13px 5px 13px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.available-block {
+    background: rgb(211, 211, 211);
+    border-radius: 10px;
+    color: black;
+}
+
+.available-block:hover {
+    background: rgb(33, 122, 30);
+    color: white;
+    cursor: pointer;
+}
+
+#must-not-have-genre .available-block:hover {
+    background: rgb(146, 26, 26);
+    color: white;
+    cursor: pointer;
+}
+
+.must-have-selected {
+    background: rgb(33, 122, 30);
+    color: white;
+}
+
+.must-not-have-selected {
+    background: rgb(146, 26, 26);
+    color: white;
+}
+
+.all-books {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.book {
+    width: 250px;
+    margin: 10px 0 20px 0px;
+    padding: 15px;
+    background-color: rgb(251 247 236);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    /* box-shadow: 1px 2px 10px #888888; */
+    border-radius: 10px;
+}
+
+.book:hover {
+    background-color: #af9e7e;
+    color: white
+}
+
+.book:hover {
+    cursor: pointer;
+}
+
+.book-cover {
+    align-self: center;
+}
+
+.book-title {
+    font-size: larger;
+}
+
+.book-summary {
+    overflow-y: scroll;
+    text-align: left;
+}
+
+.book-author {
+    font-size: large;
+}
+a:hover {
+    color: inherit;
+    text-decoration: none; /* no underline */
+}
+
+.book-link {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+#add-user-button {
+    position: fixed;
+    right: 2vw;
+    bottom: 2vw;
+    padding: 10px 13px 10px 13px;
+    font-size: 19pt;
+    font-weight: bold;
+    background: #af9e7e;
+    border-radius: 15px;
+    color: rgb(255, 255, 255);
+}
+
+#add-user-button:hover {
+    box-shadow: 1px 2px 10px #888888;
+    cursor: pointer;
 }
