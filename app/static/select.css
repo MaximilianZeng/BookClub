@@ -31,6 +31,12 @@ ul li:hover {
     border-radius: 8px;
 }
 
+#candidate-column {
+    padding: 30px 0 0 19px;
+    min-height: 100%;
+    background-color: rgba(138, 138, 138, 0.1);
+}
+
 #candidate-column ul li {
     cursor: pointer;
 }
@@ -40,10 +46,18 @@ ul li:hover {
     padding-left: 5%;
 }
 
-.remove-user-button {
+.user-section:hover > .remove-user-button {
+    display: block;
     position: absolute;
     top: -15px;
     left: -15px;
+}
+
+.remove-user-button {
+    /* position: absolute;
+    top: -15px;
+    left: -15px; */
+    display: none;
 }
 
 .remove-user-button:hover {
@@ -267,8 +281,7 @@ strong:first-child {
 
 .generic-genre {
     padding: 5px 13px 5px 13px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 5px 10px 5px 10px;
     font-size: 10pt;
     font-weight: bold;
 }
@@ -380,4 +393,14 @@ a:hover {
     background: #3f3f3f;
     box-shadow: 1px 2px 10px #888888;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 1330px) {
+    #user-block {
+        display: inline-grid;
+        grid-template-columns: 1fr;
+        /* grid-template-rows: 600px; */
+        grid-template-rows: repeat(auto-fill, 600px);
+        grid-gap: 10px;
+    }
 }

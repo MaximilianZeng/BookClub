@@ -48,8 +48,8 @@
     </div>
 	<div id="list-container" class="container-fluid row">
 		<!-- List title -->
-        <section class="col col-10 col-md-10 col-lg-4">
-            <h1>Results</h1>
+        <section class="col col-4 col-md-4 col-lg-3">
+            <!-- <h1>Results</h1> -->
             <div id="candidate-column"></div>
         </section>
         <section id="user-block">
@@ -146,14 +146,12 @@
             console.log("If it's book search: " + ifSearchBook);
 
             $(".user-section").each(function() {
-                
                 let index = $(this).index() - 1;
-                
                 if(index != currentUser){
                     console.log(index)
                     $(".user-section").eq(index).children(".book-area").children("input").val("");
                 }
-                $(".user-section").eq(currentUser).children(".author-area").children("input").val("");
+                $(this).children(".author-area").children("input").val("");
             });
 
             $("#candidate-column").html("");
@@ -205,7 +203,7 @@
                     console.log(index)
                     $(".user-section").eq(index).children(".author-area").children("input").val("");
                 }
-                $(".user-section").eq(currentUser).children(".book-area").children("input").val("");
+                $(this).children(".book-area").children("input").val("");
             });
 
             $("#candidate-column").html("");
