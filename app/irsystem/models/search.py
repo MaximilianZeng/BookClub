@@ -38,7 +38,7 @@ def cosine_similarity(joined_queries, eligible, work_mat, auth_mat, positive_que
     return reordered_results
 
 
-def combine_queries(work_ids, auth_ids, work_mat, auth_mat):
+def combine_queries(work_ids, auth_ids, work_mat, auth_mat, works):
     """
 
     Arguments
@@ -54,21 +54,26 @@ def combine_queries(work_ids, auth_ids, work_mat, auth_mat):
     """
     dimensions = len(work_mat[0])
     combined_queries = np.zeros(dimensions)
+    rocchio_adjustment = np.zeros(dimensions)
     for query_work in work_ids:
         weight = query_work["score"]
         vector_id = query_work["work_id"]
         combined_queries += work_mat[vector_id]*weight
+
+        work_rocchio = np.zeros(dimensions)
+        for sim_work in works[query_work["work_id"]]["similar_works"]:
+            work_rocchio += work_mat[sim_work]
+        work_rocchio_norm = np.linalg.norm(work_rocchio)
+        if work_rocchio_norm != 0:
+            rocchio_adjustment += weight * (work_rocchio / work_rocchio_norm)
 
     for query_author in auth_ids:
         weight = query_author["score"]
         vector_id = query_author["auth_id"]
         combined_queries += auth_mat[vector_id]*weight
 
-    query_norm = 0
-    for val in combined_queries:
-        query_norm+=val**2
-    query_norm = query_norm**0.5
-
+    combined_queries = combined_queries + (3) * rocchio_adjustment
+    query_norm = np.linalg.norm(combined_queries)
     if query_norm<0.0000001:
         return combined_queries
     else:
@@ -99,7 +104,7 @@ def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
         if query["score"] > 0:
             positive_query_authors.append(query["auth_id"])
 
-    joined_queries = combine_queries(work_ids, auth_ids, work_mat, auth_mat)
+    joined_queries = combine_queries(work_ids, auth_ids, work_mat, auth_mat, works)
     ranked_results = cosine_similarity(joined_queries, eligible, work_mat, auth_mat, positive_query_works, query_works, positive_query_authors)
 
     final_results_list = []
