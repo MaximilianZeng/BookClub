@@ -26,15 +26,29 @@ def cosine_similarity(joined_queries, eligible, work_mat, auth_mat, positive_que
     if len(positive_query_works) == 0 and len(positive_query_authors) == 0:
         return results       
 
+    def penalize(val):
+        if val>0:
+            val = val**0.4
+        else:
+            val = -((-val)**0.4)
+        return val
+
     reordered_results = []
     for work, score in results:
         cosine_sims = []
         for query in positive_query_works:
-            cosine_sims.append(np.dot(work_mat[query], work_mat[work]))
+            # so having dot products 0.5, 0.5 is better than 0.9, 0.1
+            val = np.dot(work_mat[query], work_mat[work])
+            cosine_sims.append(penalize(val))
         for query in positive_query_authors:
-            cosine_sims.append(np.dot(auth_mat[query], work_mat[work]))
-        reordered_results.append((work, np.min(np.array(cosine_sims))))
-        reordered_results.sort(key=lambda x: x[1], reverse=True)
+            val = np.dot(auth_mat[query], work_mat[work])
+            cosine_sims.append(penalize(val))
+        reordered_results.append((work, np.mean(np.array(cosine_sims))))
+        # various experiments:
+        # reordered_results.append((work, np.quantile(np.array(cosine_sims), 0.25)))
+        # reordered_results.append((work, np.median(np.array(cosine_sims))))
+        # reordered_results.append((work, np.min(np.array(cosine_sims))))
+    reordered_results.sort(key=lambda x: x[1], reverse=True)
     return reordered_results
 
 
