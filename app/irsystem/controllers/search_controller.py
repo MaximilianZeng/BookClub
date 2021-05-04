@@ -22,20 +22,31 @@ def _get_book_from_partial(book_str):
 	and cover image urls to display possible matches for the user to
 	select between.
 	"""
+	AUTOFILL_LIMIT = 20
 	works = data_pool.data['works']
+	relv_work_ids = []
 	relv_books = []
 	book_str = book_str.lower()
-	for work_id in range(len(works)):
-		title = works[work_id]['title']
-		if book_str in title.lower():
-			authors = works[work_id].get("author_names", ["(unknown)"])
-			authors = ", ".join(authors)
-			string = f'"{title}" by {authors}'
-			relv_books.append(
-				{"string": string, "work_id": work_id, "image": works[work_id].get("image")}
-			)
-		if len(relv_books) >= 20:
+	for work_id in range(len(works)): # first loop for initial matches
+		if len(relv_work_ids) >= AUTOFILL_LIMIT:
 			break
+		title = works[work_id]['title']
+		if book_str == title.lower()[:len(book_str)]:
+			relv_work_ids.append(work_id)
+	for work_id in range(len(works)): # second loop for substring matches
+		if len(relv_work_ids) >= AUTOFILL_LIMIT:
+			break
+		title = works[work_id]['title']
+		if book_str in title.lower() and work_id not in relv_work_ids:
+			relv_work_ids.append(work_id)
+	for work_id in relv_work_ids:
+		authors = works[work_id].get("author_names", ["(unknown)"])
+		authors = ", ".join(authors)
+		title = works[work_id]['title']
+		string = f'"{title}" by {authors}'
+		relv_books.append(
+			{"string": string, "work_id": work_id, "image": works[work_id].get("image")}
+		)
 	return relv_books
 
 def _clean(s):
@@ -50,20 +61,29 @@ def _get_author_from_partial(auth_str):
 	The HTML template can then use the strings to display possible matches
 	for the user to select between.
 	"""
-	authors = data_pool.data['authors'] 
+	AUTOFILL_LIMIT = 20
+	authors = data_pool.data['authors']
 	relv_auths = []
+	relv_auth_ids = []
 	auth_str = _clean(auth_str)
 	for i, auth_name in enumerate(authors):
-		if auth_str in _clean(auth_name):
-			relv_auths.append({"name": auth_name, "author_id": i})
-		if len(relv_auths) >= 20:
+		if len(relv_auth_ids) >= AUTOFILL_LIMIT:
 			break
+		if auth_str == _clean(auth_name)[:len(auth_str)]:
+			relv_auth_ids.append(i)
+	for i, auth_name in enumerate(authors):
+		if len(relv_auth_ids) >= AUTOFILL_LIMIT:
+			break
+		if auth_str in _clean(auth_name) and i not in relv_auth_ids:
+			relv_auth_ids.append(i)
+	for i in relv_auth_ids:
+		relv_auths.append({"name": authors[i], "author_id": i})
 	return relv_auths
 
 def rescore(inputs, idid):
 	"""Given some inputs in form [{work_id: stars}], rescale and
 	return rescored inpust in form [{`idid`: work_id, "score": score}]"""
-	rescale = {1: -1.8, 2: -0.9, 3: 0.5, 4: 1, 5: 2}
+	rescale = {1: -1, 2: -0.5, 3: 0.5, 4: 1, 5: 2}
 	rescored = []
 	for i in inputs:
 		iid, stars = list(i.items())[0]
