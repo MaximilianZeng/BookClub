@@ -12,96 +12,114 @@
 	<link rel="stylesheet" type="text/css" href="../static/select.css">
 </head>
 <body>
-    <div id="top-row" class="row">
-        Enter in books and authors each member likes or dislikes, and we’ll find books you’ll all enjoy!
-        <div type="submit" id="submit-button">Submit</div>
-    </div>
-    <div id="genre-row">
-        <!-- 'mystery, thriller, crime', 'fantasy, paranormal', 'non-fiction', 'fiction', 'children', 'history, historical fiction, biography','young-adult','romance' -->
-        <span>Genres</span>
-        <div id="must-have-genre" class="genre-row">
-            <div>Books must be one of :</div>
-            <div class="row">   
-                <div class="generic-genre available-block">mystery, thriller, crime</div>
-                <div class="generic-genre available-block">fantasy, paranormal</div>
-                <div class="generic-genre available-block">non-fiction</div>
-                <div class="generic-genre available-block">fiction</div>
-                <div class="generic-genre available-block">children</div>
-                <div class="generic-genre available-block">history, historical fiction, biography</div>
-                <div class="generic-genre available-block">young-adult</div>
-                <div class="generic-genre available-block">romance</div>
-            </div>
-        </div>
-        <div id="must-not-have-genre" class="genre-row">
-            <div>Books must not be :</div>
-            <div class="row">   
-                <div class="generic-genre available-block">mystery, thriller, crime</div>
-                <div class="generic-genre available-block">fantasy, paranormal</div>
-                <div class="generic-genre available-block">non-fiction</div>
-                <div class="generic-genre available-block">fiction</div>
-                <div class="generic-genre available-block">children</div>
-                <div class="generic-genre available-block">history, historical fiction, biography</div>
-                <div class="generic-genre available-block">young-adult</div>
-                <div class="generic-genre available-block">romance</div>
-            </div>
-        </div>
-    </div>
-	<div id="list-container" class="container-fluid row">
-		<!-- List title -->
-        <section class="col col-4 col-md-4 col-lg-3">
-            <!-- <h1>Results</h1> -->
-            <div id="candidate-column"></div>
-        </section>
-        <section id="user-block">
-            <div id="add-user-button">Add User</div>
-            <!-- <section class="user-section">
-                <img class="remove-user-button" src="/static/assets/delete_icon.png" alt="X" width="40" height="40">
-                <div class="list-title">
-                    <strong>User</strong>
+    <div id="main-container">
+        <div id="top-row" class="row">
+            <div class="row">
+                <img src="/static/assets/logo.png" alt="Logo" width="78" height="60">
+                <div>
+                    <span><span style="color: #957F5A">Book </span>Club</span>
+                    <br/>
+                    Enter in books and authors each member likes or dislikes, and we’ll find books you’ll all enjoy!
                 </div>
-                <div class="book-area">
-                    <input type="text" name="" class="new-input book-input" placeholder="Add books here:">
-                    <ul>
-                        <li>
-                            <div class="book-item" id="001">
-                                <span class="delete-button">
-                                    <img src="/static/assets/cross_icon.png" alt="X" width="25" height="25">
-                                </span>
-                                Harry Potter and the Order of Phoenix
-                            </div>
-                            <div class="row rating">
-                                <p>Hate</p>
-                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.nextElementSibling.value = this.value">
-                                <p>Love</p>
-                                <output class="rating-output">5</output>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="author-area">
-                    <input type="text" name="" class="new-input author-input" placeholder="Add authors here">
-                    <ul>
-                        <li>
-                            <div class="author-item" id="007">
-                                <span class="delete-button">
-                                    <img src="/static/assets/cross_icon.png" alt="X" width="25" height="25">
-                                </span>
-                                J.K. Rowling
-                            </div>
-                            <div class="row rating">
-                                <p>Hate</p>
-                                <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.nextElementSibling.value = this.value">
-                                <p>Love</p>
-                                <output class="rating-output">5</output>
-                            </div>
-                        </li>
-                    </ul>
+            </div>
+            <div id="submit-button">Submit</div>
+        </div>
+    
+        <div id="list-container" class="container-fluid">
+            <!-- List title -->
+            <section id="candidate-column" class="col-10">
+                <!-- <h1>Results</h1> -->
+                <!-- <div id="candidate-column"></div> -->
+            </section>
+            <section id="user-block" class="col-10">
+                <div id="user-block-container">
+                    <!-- <section class="user-section">
+                        <img class="remove-user-button" src="/static/assets/delete_icon.png" alt="X" width="40" height="40">
+                        <div class="list-title">
+                            <strong>User</strong>
+                        </div>
+                        <div class="book-area">
+                            <input type="text" name="" class="new-input book-input" placeholder="Add books here:">
+                            <ul>
+                                <li>
+                                    <div class="book-item" id="001">
+                                        <span class="delete-button">
+                                            <img src="/static/assets/cross_icon.png" alt="X" width="25" height="25">
+                                        </span>
+                                        Harry Potter and the Order of Phoenix
+                                    </div>
+                                    <div class="row rating">
+                                        <p>Hate</p>
+                                        <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.nextElementSibling.value = this.value">
+                                        <p>Love</p>
+                                        <output class="rating-output">5</output>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="author-area">
+                            <input type="text" name="" class="new-input author-input" placeholder="Add authors here">
+                            <ul>
+                                <li>
+                                    <div class="author-item" id="007">
+                                        <span class="delete-button">
+                                            <img src="/static/assets/cross_icon.png" alt="X" width="25" height="25">
+                                        </span>
+                                        J.K. Rowling
+                                    </div>
+                                    <div class="row rating">
+                                        <p>Hate</p>
+                                        <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.nextElementSibling.value = this.value">
+                                        <p>Love</p>
+                                        <output class="rating-output">5</output>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </section> -->
+                    <div id="add-user-button">
+                        <img src="/static/assets/add_icon.png" alt="Add User" width="100" height="100">
+                    </div>
                 </div>
                 
-            </section> -->
-
-        </section>
-	</div>
+                
+            </section>
+            <!-- <section class="col-1"></section> -->
+        </div>
+    
+        <div id="genre-row">
+            <!-- 'mystery, thriller, crime', 'fantasy, paranormal', 'non-fiction', 'fiction', 'children', 'history, historical fiction, biography','young-adult','romance' -->
+            <span>Genre Filter (optional)</span>
+            <div id="must-have-genre" class="genre-row">
+                <div>Must be one of :</div>
+                <div class="row">   
+                    <div class="generic-genre available-block">mystery, thriller, crime</div>
+                    <div class="generic-genre available-block">fantasy, paranormal</div>
+                    <div class="generic-genre available-block">non-fiction</div>
+                    <div class="generic-genre available-block">fiction</div>
+                    <div class="generic-genre available-block">children</div>
+                    <div class="generic-genre available-block">history, historical fiction, biography</div>
+                    <div class="generic-genre available-block">young-adult</div>
+                    <div class="generic-genre available-block">romance</div>
+                </div>
+            </div>
+            <div id="must-not-have-genre" class="genre-row">
+                <div>Must not be :</div>
+                <div class="row">   
+                    <div class="generic-genre available-block">mystery, thriller, crime</div>
+                    <div class="generic-genre available-block">fantasy, paranormal</div>
+                    <div class="generic-genre available-block">non-fiction</div>
+                    <div class="generic-genre available-block">fiction</div>
+                    <div class="generic-genre available-block">children</div>
+                    <div class="generic-genre available-block">history, historical fiction, biography</div>
+                    <div class="generic-genre available-block">young-adult</div>
+                    <div class="generic-genre available-block">romance</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
 	<script>
 
@@ -116,7 +134,8 @@
             user_section.append($("<div class='list-title'><strong>User</strong></div>"));
             user_section.append($("<div class='book-area'>").html("<input type='text' class='new-input book-input' placeholder='Add books here:'><ul>"));
             user_section.append($("<div class='author-area'>").html("<input type='text' class='new-input author-input' placeholder='Add authors here:'><ul>"));
-            $("#user-block").append(user_section);
+            // $("#user-block").append(user_section);
+            $(user_section).insertBefore("#user-block-container #add-user-button");
         };
 
         $("#add-user-button").on('click', function() {
@@ -132,7 +151,7 @@
         });
 
         // index of current user searching
-        let currentUser = -1;
+        let currentUser = 0;
 
         let ifSearchBook = true;
 
@@ -140,15 +159,15 @@
         $(document).on("input", ".book-input", function() {
             // First, clear author search input
             var newInput = $(this).val().trim();
-            currentUser = $(this).parent().parent().index()-1;
+            currentUser = $(this).parent().parent().index();
             console.log("Current User: " + currentUser);
             ifSearchBook = true;
             console.log("If it's book search: " + ifSearchBook);
 
             $(".user-section").each(function() {
-                let index = $(this).index() - 1;
+                let index = $(this).index();
                 if(index != currentUser){
-                    console.log(index)
+                    // console.log(index)
                     $(".user-section").eq(index).children(".book-area").children("input").val("");
                 }
                 $(this).children(".author-area").children("input").val("");
@@ -191,16 +210,16 @@
         $(document).on("input", ".author-input", function() {
             
             var newInput = $(this).val().trim();
-            currentUser = $(this).parent().parent().index()-1;
+            currentUser = $(this).parent().parent().index();
             // console.log(newInput);
             console.log("Current User: " + currentUser);
             ifSearchBook = false;
             console.log("Current search: " + ifSearchBook);
 
             $(".user-section").each(function() {
-                let index = $(this).index() - 1;
+                let index = $(this).index();
                 if(index != currentUser){
-                    console.log(index)
+                    // console.log(index)
                     $(".user-section").eq(index).children(".author-area").children("input").val("");
                 }
                 $(this).children(".book-area").children("input").val("");

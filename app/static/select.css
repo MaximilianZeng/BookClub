@@ -11,12 +11,20 @@
 body {
     padding: 0 ! important;
 	font-family: 'Noto Sans KR', sans-serif;
+    background-image: url(assets/library_bg.jpeg);
+}
+
+#main-container {
+    margin: 5%;
+    background-color: white;
 }
 
 ul {
-	margin: 0;
+	margin: 0 auto 0 auto;
 	padding: 0;
 }
+
+
 
 ul li {
 	list-style-type: none;
@@ -32,9 +40,18 @@ ul li:hover {
 }
 
 #candidate-column {
-    padding: 30px 0 0 19px;
-    min-height: 100%;
-    background-color: rgba(138, 138, 138, 0.1);
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    background-color: rgba(61, 47, 35, 0.2);
+    border-radius: 15px;
+    overflow-x: scroll;
+    margin: 0 auto 6vh auto;
+}
+
+#candidate-column ul {
+    padding: 10px;
+    display: contents;
 }
 
 #candidate-column ul li {
@@ -43,7 +60,7 @@ ul li:hover {
 
 #list-container{
 	margin-top: 3%;
-    padding-left: 5%;
+    padding-left: 2%;
 }
 
 .user-section:hover > .remove-user-button {
@@ -66,8 +83,9 @@ ul li:hover {
 
 .user-section {
     position: relative;
-    max-height: 500px;
+    max-height: 450px;
     width: 350px;
+    min-width: 350px;
     margin: 30px;
     box-shadow: 1px 2px 10px #888888;
     background-color: #FAFAFA;
@@ -88,7 +106,7 @@ ul li:hover {
 
 .book-area {
     width: 89%;
-    height: 200px;
+    height: 175px;
     margin: 6% auto 3% 20px;
     text-overflow: ellipsis;
     overflow-x: auto;
@@ -112,7 +130,7 @@ ul li:hover {
 
 .author-area {
     width: 89%;
-    height: 180px;
+    height: 170px;
     margin: 6% auto 3% 20px;
     text-overflow: ellipsis;
     overflow-x: auto;
@@ -241,11 +259,24 @@ strong:first-child {
 }
 
 #top-row {
-    padding: 30px 30px 30px 30px;
-    flex-direction: row;
+    padding: 8vh 30px 30px 30px;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
     justify-content: space-between;
     font-size: 18px;
     font-weight: bolder;
+}
+
+#top-row > div > div {
+    margin-left: 20px;
+}
+
+
+#top-row > div > div > span {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
 }
 
 #submit-button {
@@ -255,6 +286,7 @@ strong:first-child {
     color: white;
     font-size: 15pt;
     font-weight: bold;
+    height: 40px;
 }
 
 #submit-button:hover {
@@ -263,8 +295,10 @@ strong:first-child {
 }
 
 #genre-row  {
-    padding: 30px 40px 30px 70px;
-    background-color: rgb(251 247 236);
+    padding: 30px 0 5vh 0;
+    width: 73vw;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #genre-row span {
@@ -280,8 +314,8 @@ strong:first-child {
 }
 
 .generic-genre {
-    padding: 5px 13px 5px 13px;
-    margin: 5px 10px 5px 10px;
+    padding: 9px 5px 9px 5px;
+    margin: 5px 5px 5px 5px;
     font-size: 10pt;
     font-weight: bold;
 }
@@ -293,24 +327,28 @@ strong:first-child {
 }
 
 .available-block:hover {
-    background: rgb(33, 122, 30);
+    /* background: rgb(33, 122, 30); */
+    background: #7A6644;
     color: white;
     cursor: pointer;
 }
 
 #must-not-have-genre .available-block:hover {
-    background: rgb(146, 26, 26);
+    /* background: rgb(146, 26, 26); */
+    background: #7A6644;
     color: white;
     cursor: pointer;
 }
 
 .must-have-selected {
-    background: rgb(33, 122, 30);
+    /* background: rgb(33, 122, 30); */
+    background: #7A6644;
     color: white;
 }
 
 .must-not-have-selected {
-    background: rgb(146, 26, 26);
+    /* background: rgb(146, 26, 26); */
+    background: #7A6644;
     color: white;
 }
 
@@ -321,15 +359,33 @@ strong:first-child {
     justify-content: space-evenly;
 }
 
+.author {
+    height: 220px;
+    min-width: 200px;
+    margin: 10px 10px 10px 10px;
+    padding: 15px;
+    padding-top: 11vh;
+    font-size: 15pt;
+    font-weight: bold;
+    background-color: rgb(251 247 236);
+    text-align: center;
+    border-radius: 10px;
+}
+
+.author:hover {
+    background-color: #af9e7e;
+}
+
 .book {
-    width: 250px;
-    margin: 10px 0 20px 0px;
+    height: 220px;
+    min-width: 200px;
+    margin: 10px 10px 10px 10px;
     padding: 15px;
     background-color: rgb(251 247 236);
     text-align: center;
     display: flex;
     flex-direction: column;
-    /* box-shadow: 1px 2px 10px #888888; */
+    overflow: scroll;
     border-radius: 10px;
 }
 
@@ -369,38 +425,52 @@ a:hover {
 }
 
 #user-block {
-    display: inline-grid;
+    /* display: inline-grid;
     grid-template-columns: 1fr 1fr;
-    /* grid-template-rows: 600px; */
     grid-template-rows: repeat(auto-fill, 600px);
-    grid-gap: 10px;
+    grid-gap: 10px; */
+    display: flex;
+    align-items: center;
+    background-color: rgba(61, 47, 35, 0.2);
+    border-radius: 15px;
+    margin: 0 auto 10vh auto;
+    /* flex-direction: row;
+    overflow: scroll; */
+}
+
+#user-block-container {
+    display: flex;    
+    overflow-x: scroll;
+    align-items: center;
 }
 
 #add-user-button {
-    position: fixed;
-    right: 3vw;
-    bottom: 5vw;
-    padding: 10px 20px 10px 20px;
-    font-size: 19pt;
-    font-weight: bold;
-    background: #1f1f1f;
-    border-radius: 35px;
-    color: rgb(255, 255, 255);
-    z-index: 100;
+    /* position: fixed; */
+
+    /* right: 3vw;
+    bottom: 5vw; */
+    /* margin-top: 50%; */
+    border-radius: 100%;
+    /* z-index: 100; */
 }
 
 #add-user-button:hover {
-    background: #3f3f3f;
-    box-shadow: 1px 2px 10px #888888;
+    box-shadow: 0px 0px 20px #888888;
     cursor: pointer;
 }
 
-@media only screen and (max-width: 1330px) {
+@media only screen and (max-width: 1100px) {
     #user-block {
         display: inline-grid;
         grid-template-columns: 1fr;
         /* grid-template-rows: 600px; */
         grid-template-rows: repeat(auto-fill, 600px);
         grid-gap: 10px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .book {
+        margin: 10px 0 20px 0;
     }
 }
