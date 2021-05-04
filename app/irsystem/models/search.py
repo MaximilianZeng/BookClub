@@ -78,20 +78,25 @@ def combine_queries(work_ids, auth_ids, work_mat, auth_mat, works):
         for sim_work in works[query_work["work_id"]]["similar_works"]:
             work_rocchio += work_mat[sim_work]
         work_rocchio_norm = np.linalg.norm(work_rocchio)
-        if work_rocchio_norm != 0:
-            rocchio_adjustment += weight * (work_rocchio / work_rocchio_norm)
+        rocchio_adjustment += weight * (work_rocchio)
 
     for query_author in auth_ids:
         weight = query_author["score"]
         vector_id = query_author["auth_id"]
         combined_queries += auth_mat[vector_id]*weight
-
-    combined_queries = combined_queries + (3) * rocchio_adjustment
+    
     query_norm = np.linalg.norm(combined_queries)
-    if query_norm<0.0000001:
-        return combined_queries
-    else:
-        return combined_queries/query_norm
+    rocchio_norm = np.linalg.norm(rocchio_adjustment)
+
+    if query_norm > 0.0001:
+        combined_queries = combined_queries/query_norm
+    if rocchio_norm > 0.0001:
+        rocchio_adjustment = rocchio_adjustment/rocchio_norm
+
+    combined_queries = combined_queries + (1.5) * rocchio_adjustment
+
+    return combined_queries
+
 
 def get_doc_rankings(work_ids, eligible, auth_ids, work_mat, auth_mat, works):
     """Returns a dictionary of terms and tf-idf values representing the combined result of individual queries
