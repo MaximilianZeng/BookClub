@@ -83,7 +83,7 @@ def _get_author_from_partial(auth_str):
 def rescore(inputs, idid):
 	"""Given some inputs in form [{work_id: stars}], rescale and
 	return rescored inpust in form [{`idid`: work_id, "score": score}]"""
-	rescale = {1: -1.8, 2: -0.9, 3: 0.5, 4: 1, 5: 2}
+	rescale = {1: -1, 2: -0.5, 3: 0.5, 4: 1, 5: 2}
 	rescored = []
 	for i in inputs:
 		iid, stars = list(i.items())[0]
