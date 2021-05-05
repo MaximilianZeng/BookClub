@@ -153,7 +153,7 @@
 
         let ifSearchBook = true;
 
-        // Adding list of matching book into candidate column on the left
+        // Adding list of matching book into candidate column on the top
         $(document).on("input", ".book-input", function() {
             // First, clear author search input
             var newInput = $(this).val().trim();
@@ -194,7 +194,8 @@
                     var img = $("<img class=\"book-cover\"src=\"" + booksMap[i]['image'] + "\">");
                     book_display.append(img);
                     var title = $("<h2 class=\"book-title\">");
-                    title.append(booksMap[i]['string']);
+                    var bookTitle = booksMap[i]['string'].split("\"")[1];
+                    title.append(bookTitle);
                     book_display.append(title);
 
                     // book_link.append(book_display.clone());
