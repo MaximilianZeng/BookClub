@@ -16,9 +16,14 @@
         <h1>Here's what you should read next!</h1>
         <div id="bookDisplay">
         </div>
+        <div id="centerButton">
+            <button id="showMore">Show More</button>
+        </div> 
     </div>
 
     <script>
+        const NUM_RESULTS = 15;
+
         const gen_inspect_page = (book) => {
             const book_inspect_bg = $("<div class=\"book-inspect-bg\">");
             const book_inspect = $("<div class=\"book-inspect\">");
@@ -47,6 +52,38 @@
             return book_inspect_bg;
         }
 
+        const gen_book_cards = (book_data, all_books) => {
+            for (var i = 0; i < NUM_RESULTS; i++) {
+                var book = book_data.shift();
+                console.log(book);
+                var book_display = $("<div class=\"book\">");
+                var book_ranking = $("<div class=\"book-rank\">");
+                book_ranking.append(book.ranking);
+                book_display.append(book_ranking);
+                var img = $("<img class=\"book-cover\"src=\"" + book.image_url + "\">");
+                book_display.append(img);
+                var title = $("<h2 class=\"book-title\">");
+                title.append(book.title);
+                book_display.append(title);
+                var author = $("<h3 class=\"book-author\">");
+                author.append(book.author ? book.author : "Author Not Found");
+                book_display.append(author);
+                var summary = $("<div class=\"book-summary\">");
+                summary.append(book.description);
+                book_display.append(summary);
+
+                const book_inspect = gen_inspect_page(book);
+                $(book_display).click(() => {
+                    $(book_inspect).show();
+                });
+                $("#pageDisplay").append(book_inspect);
+
+                all_books.append(book_display);
+            }
+
+            return all_books;
+        }
+
         $(function() {
             var data = sessionStorage.getItem("result");
             if(data) {
@@ -55,34 +92,14 @@
                 var book_data = JSON.parse(data);
                 console.log(book_data);
                 var all_books = $("<div class=\"all-books\">");
-                for (var i = 0; i < book_data.length; i++) {
-                    var book = book_data[i];
-                    console.log(book);
-                    var book_display = $("<div class=\"book\">");
-                    var book_ranking = $("<div class=\"book-rank\">");
-                    book_ranking.append(book.ranking);
-                    book_display.append(book_ranking);
-                    var img = $("<img class=\"book-cover\"src=\"" + book.image_url + "\">");
-                    book_display.append(img);
-                    var title = $("<h2 class=\"book-title\">");
-                    title.append(book.title);
-                    book_display.append(title);
-                    var author = $("<h3 class=\"book-author\">");
-                    author.append(book.author ? book.author : "Author Not Found");
-                    book_display.append(author);
-                    var summary = $("<div class=\"book-summary\">");
-                    summary.append(book.description);
-                    book_display.append(summary);
-
-                    const book_inspect = gen_inspect_page(book);
-                    $(book_display).click(() => {
-                        $(book_inspect).show();
-                    });
-                    $("#pageDisplay").append(book_inspect);
-
-                    all_books.append(book_display);
-                }
+                all_books = gen_book_cards(book_data,all_books);
                 $("#bookDisplay").append(all_books);
+                
+                $("#showMore").click(() => {
+                    var add_books = gen_book_cards(book_data,all_books);
+                    $("#bookDisplay").append(add_books);
+                })
+                
             }
             else {
                 console.log("No results found!");

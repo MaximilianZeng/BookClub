@@ -89,3 +89,16 @@ body {
     font-weight: bold;
     font-size: large;
 }
+
+#showMore {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 130px;
+    border-radius: 10px;
+    background-color: rgb(40, 146, 182);
+    color: white;
+}
+
+#centerButton {
+    text-align: center;
+}
