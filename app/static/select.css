@@ -15,8 +15,9 @@ body {
 }
 
 #main-container {
-    margin: 5%;
+    margin: 5% 10% 5% 10%;
     background-color: white;
+    padding-bottom: 9vh;
 }
 
 ul {
@@ -40,13 +41,13 @@ ul li:hover {
 }
 
 #candidate-column {
-    height: 30vh;
+    height: 26vh;
     display: flex;
     align-items: center;
     background-color: rgba(61, 47, 35, 0.2);
     border-radius: 15px;
     overflow-x: scroll;
-    margin: 0 auto 6vh auto;
+    margin: 0 auto 2vh auto;
 }
 
 #candidate-column ul {
@@ -59,7 +60,7 @@ ul li:hover {
 }
 
 #list-container{
-	margin-top: 3%;
+	margin-top: 1%;
     padding-left: 2%;
 }
 
@@ -259,44 +260,47 @@ strong:first-child {
 }
 
 #top-row {
-    padding: 8vh 30px 30px 30px;
-    width: 80vw;
+    padding: 6vh 0 25px 0;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
-    justify-content: space-between;
     font-size: 18px;
     font-weight: bolder;
 }
 
-#top-row > div > div {
-    margin-left: 20px;
+#top-row > div {
+    margin-left: 40px;
 }
 
 
-#top-row > div > div > span {
+#top-row > div > span {
     font-size: 28px;
     font-weight: bold;
     margin: 0;
 }
 
 #submit-button {
-    padding: 5px 25px 5px 25px;
+    padding: 8px 25px 5px 25px;
+    margin: 3vh auto 0 auto;
     background: black;
-    border-radius: 25px;
+    border-radius: 20px;
     color: white;
-    font-size: 15pt;
+    font-size: 20pt;
     font-weight: bold;
-    height: 40px;
+    height: 60px;
+    text-align: center;
+    width: 30vw;
 }
 
 #submit-button:hover {
     background: rgb(53, 53, 53);
     cursor: pointer;
+    box-shadow: 0px 0px 10px #888888;
 }
 
 #genre-row  {
     padding: 30px 0 5vh 0;
-    width: 73vw;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -308,8 +312,6 @@ strong:first-child {
 
 .genre-row {
     margin-top: 20px;
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
 }
 
@@ -360,7 +362,7 @@ strong:first-child {
 }
 
 .author {
-    height: 220px;
+    height: 200px;
     min-width: 200px;
     margin: 10px 10px 10px 10px;
     padding: 15px;
@@ -377,8 +379,8 @@ strong:first-child {
 }
 
 .book {
-    height: 220px;
-    min-width: 200px;
+    height: 200px;
+    min-width: 210px;
     margin: 10px 10px 10px 10px;
     padding: 15px;
     background-color: rgb(251 247 236);
@@ -387,6 +389,7 @@ strong:first-child {
     flex-direction: column;
     overflow: scroll;
     border-radius: 10px;
+    font-size: 9pt;
 }
 
 .book:hover {
@@ -433,7 +436,7 @@ a:hover {
     align-items: center;
     background-color: rgba(61, 47, 35, 0.2);
     border-radius: 15px;
-    margin: 0 auto 10vh auto;
+    margin: 0 auto 4vh auto;
     /* flex-direction: row;
     overflow: scroll; */
 }
@@ -457,20 +460,4 @@ a:hover {
 #add-user-button:hover {
     box-shadow: 0px 0px 20px #888888;
     cursor: pointer;
-}
-
-@media only screen and (max-width: 1100px) {
-    #user-block {
-        display: inline-grid;
-        grid-template-columns: 1fr;
-        /* grid-template-rows: 600px; */
-        grid-template-rows: repeat(auto-fill, 600px);
-        grid-gap: 10px;
-    }
-}
-
-@media only screen and (max-width: 900px) {
-    .book {
-        margin: 10px 0 20px 0;
-    }
 }
