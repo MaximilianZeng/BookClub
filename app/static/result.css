@@ -21,6 +21,12 @@ body {
     display: flex;
     flex-direction: column;
     box-shadow: 1px 2px 10px #888888;
+    cursor: pointer;
+}
+
+.book:hover {
+    background-color: #af9e7e;
+    color: white;
 }
 
 .book-cover {
@@ -91,14 +97,24 @@ body {
 }
 
 #showMore {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    width: 130px;
-    border-radius: 10px;
-    background-color: rgb(40, 146, 182);
+    padding: 8px 25px 5px 25px;
+    margin: 3vh auto 3vh auto;
+    background: black;
+    border-radius: 20px;
     color: white;
+    font-size: 20pt;
+    font-weight: bold;
+    height: 60px;
+    text-align: center;
+    width: 20vw;
 }
 
 #centerButton {
     text-align: center;
+}
+
+#showMore:hover {
+    background: rgb(53, 53, 53);
+    cursor: pointer;
+    box-shadow: 0px 0px 10px #888888;
 }
