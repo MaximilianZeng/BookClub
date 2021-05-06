@@ -77,23 +77,17 @@ def combine_queries(work_ids, auth_ids, work_mat, auth_mat, works):
         work_rocchio = np.zeros(dimensions)
         for sim_work in works[query_work["work_id"]]["similar_works"]:
             work_rocchio += work_mat[sim_work]
-        work_rocchio_norm = np.linalg.norm(work_rocchio)
         rocchio_adjustment += weight * (work_rocchio)
 
     for query_author in auth_ids:
         weight = query_author["score"]
         vector_id = query_author["auth_id"]
         combined_queries += auth_mat[vector_id]*weight
-    
-    query_norm = np.linalg.norm(combined_queries)
-    rocchio_norm = np.linalg.norm(rocchio_adjustment)
-
-    if query_norm > 0.0001:
-        combined_queries = combined_queries/query_norm
-    if rocchio_norm > 0.0001:
-        rocchio_adjustment = rocchio_adjustment/work_rocchio_norm
 
     combined_queries = combined_queries + (0.7) * rocchio_adjustment
+    query_norm = np.linalg.norm(combined_queries)
+    if query_norm > 0.0001:
+        combined_queries = combined_queries/query_norm
 
     return combined_queries
 
