@@ -91,9 +91,9 @@ def combine_queries(work_ids, auth_ids, work_mat, auth_mat, works):
     if query_norm > 0.0001:
         combined_queries = combined_queries/query_norm
     if rocchio_norm > 0.0001:
-        rocchio_adjustment = rocchio_adjustment/rocchio_norm
+        rocchio_adjustment = rocchio_adjustment/work_rocchio_norm
 
-    combined_queries = combined_queries + (1.5) * rocchio_adjustment
+    combined_queries = combined_queries + (0.7) * rocchio_adjustment
 
     return combined_queries
 
