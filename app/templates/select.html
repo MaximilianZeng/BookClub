@@ -12,80 +12,34 @@
 	<link rel="stylesheet" type="text/css" href="../static/select.css">
 </head>
 <body>
-    <div id="main-container">
-        <div id="top-row" class="row">
+    <div id="input-container">
+        <header>
             <img src="/static/assets/logo.png" alt="Logo" width="78" height="60">
             <div>
                 <span><span style="color: #957F5A">Book </span>Club</span>
                 <br/>
                 Enter in books and authors each member likes or dislikes, and we’ll find books you’ll all enjoy!
             </div>
-        </div>
+        </header>
     
-        <div id="list-container" class="container-fluid">
-            <!-- List title -->
-            <section id="candidate-column" class="col-10">
-                <!-- <h1>Results</h1> -->
-                <!-- <div id="candidate-column"></div> -->
-            </section>
-            <section id="user-block" class="col-10">
+        <section id="user-inputs" class="container-fluid">
+
+            <!-- -------- Search results (candidates) -------- -->
+            <div id="candidate-block" class="col-10">
+            </div>
+
+            <!-- ---------- User cards ---------- -->
+            <div id="user-block" class="col-10">
                 <div id="user-block-container">
-                    <!-- <section class="user-section">
-                        <img class="remove-user-button" src="/static/assets/delete_icon.png" alt="X" width="40" height="40">
-                        <div class="list-title">
-                            <strong>User</strong>
-                        </div>
-                        <div class="book-area">
-                            <input type="text" name="" class="new-input book-input" placeholder="Add books here:">
-                            <ul>
-                                <li>
-                                    <div class="book-item" id="001">
-                                        <span class="delete-button">
-                                            <img src="/static/assets/cross_icon.png" alt="X" width="25" height="25">
-                                        </span>
-                                        Harry Potter and the Order of Phoenix
-                                    </div>
-                                    <div class="row rating">
-                                        <p>Hate</p>
-                                        <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.nextElementSibling.value = this.value">
-                                        <p>Love</p>
-                                        <output class="rating-output">5</output>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="author-area">
-                            <input type="text" name="" class="new-input author-input" placeholder="Add authors here">
-                            <ul>
-                                <li>
-                                    <div class="author-item" id="007">
-                                        <span class="delete-button">
-                                            <img src="/static/assets/cross_icon.png" alt="X" width="25" height="25">
-                                        </span>
-                                        J.K. Rowling
-                                    </div>
-                                    <div class="row rating">
-                                        <p>Hate</p>
-                                        <input type="range" value="5" min="1" max="5" step="1" oninput="this.nextElementSibling.nextElementSibling.value = this.value">
-                                        <p>Love</p>
-                                        <output class="rating-output">5</output>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        
-                    </section> -->
                     <div id="add-user-button">
                         <img src="/static/assets/add_icon.png" alt="Add User" width="100" height="100">
                     </div>
                 </div>
-                
-                
-            </section>
-            <!-- <section class="col-1"></section> -->
-        </div>
+            </div>
+        </section>
     
-        <div id="genre-row">
+        <!-- ---------- Genre Filter ---------- -->
+        <section id="genre-row">
             <!-- 'mystery, thriller, crime', 'fantasy, paranormal', 'non-fiction', 'fiction', 'children', 'history, historical fiction, biography','young-adult','romance' -->
             <span>Genre Filter (optional)</span>
             <div id="must-have-genre" class="genre-row">
@@ -114,25 +68,19 @@
                     <div class="generic-genre available-block">romance</div>
                 </div>
             </div>
-        </div>
-        <div id="submit-button">Submit</div>
+        </section>
+
+        <!-- ---------- Submit Button ---------- -->
+        <section id="submit-button">Submit</div>
     </div>
     
 
 	<script>
-
-        // Initial setup - add default number of user
-        let num_users = 2;
-        for (let i = 0; i < num_users; i++) {
-            addUser();
-        }
-
         function addUser() {
             let user_section = $("<section class='user-section'>").html("<img class='remove-user-button' src='/static/assets/delete_icon.png' alt='X' width='40' height='40'>");
-            user_section.append($("<div class='list-title'><strong>User</strong></div>"));
+            user_section.append($("<div class='user-title'><strong>User</strong></div>"));
             user_section.append($("<div class='book-area'>").html("<input type='text' class='new-input book-input' placeholder='Add books here:'><ul>"));
             user_section.append($("<div class='author-area'>").html("<input type='text' class='new-input author-input' placeholder='Add authors here:'><ul>"));
-            // $("#user-block").append(user_section);
             $(user_section).insertBefore("#user-block-container #add-user-button");
         };
 
@@ -140,56 +88,54 @@
             addUser();
         });
 
-        // Remove user
+        // Initial setup - add default number of user
+        let num_users = 2;
+        for (let i = 0; i < num_users; i++) {
+            addUser();
+        }
+
+        // Remove corresponding user on remove button clicked
         $(document).on("click", ".remove-user-button", function() {
             $(this).parent().fadeToggle(400, function() {
-				$("#candidate-column").html("");
+				$("#candidate-block").html("");
 				$(this).remove();
 			});
         });
 
-        // index of current user searching
-        let currentUser = 0;
+        let currentUser = 0;// index of current user searching
 
-        let ifSearchBook = true;
+        let ifSearchBook = true;// bool to determine the type of searching
 
-        // Adding list of matching book into candidate column on the top
+        // Adding list of matching book into the search results
         $(document).on("input", ".book-input", function() {
-            // First, clear author search input
+            // clear book & author search input
             var newInput = $(this).val().trim();
             currentUser = $(this).parent().parent().index();
-            console.log("Current User: " + currentUser);
-            ifSearchBook = true;
-            console.log("If it's book search: " + ifSearchBook);
 
             $(".user-section").each(function() {
                 let index = $(this).index();
                 if(index != currentUser){
-                    // console.log(index)
                     $(".user-section").eq(index).children(".book-area").children("input").val("");
                 }
                 $(this).children(".author-area").children("input").val("");
             });
 
-            $("#candidate-column").html("");
-
+            $("#candidate-block").html("");
             let books = new Array();
             $.get("/booknames", {partial: newInput}).done(function(value) {
                 booksMap = null;
                 booksMap = jQuery.parseJSON(value);
-                // console.log(booksMap)
-                $("#candidate-column").html("");
+                $("#candidate-block").html("");
                 books = new Array();
                 let num_results = 10;
                 booksMap.length > 10 ? num_results = 10 : num_results = booksMap.length;
                 for (let i = 0; i < num_results; i++) {
                     books.push(booksMap[i]["string"]);
                 };
-                $("#candidate-column").html("");
+                $("#candidate-block").html("");
                 let candidates_column = $("<ul>");
-                let column_size = booksMap.length > 10 ? 10 : booksMap.length
+                let column_size = booksMap.length > 10 ? 10 : booksMap.length // limit the number of results to be 10
                 for (let i = 0; i < column_size; i++) {
-                    // candidates_column.append($("<li class=\"candidate\" id=\"" + booksMap[i]['work_id'] + "\">").html(booksMap[i]["string"]));
                     var book_display = $("<div class=\"book\" id=\"" + booksMap[i]['work_id'] + "\">");
                     var img = $("<img class=\"book-cover\"src=\"" + booksMap[i]['image'] + "\">");
                     book_display.append(img);
@@ -197,20 +143,17 @@
                     var bookTitle = booksMap[i]['string'].split("\"")[1];
                     title.append(bookTitle);
                     book_display.append(title);
-
-                    // book_link.append(book_display.clone());
                     candidates_column.append(book_display);
                 }
-                $("#candidate-column").append(candidates_column);
+                $("#candidate-block").append(candidates_column);
             });
         });
 
-        // Adding list of authors in the search results column
+        // Adding list of authors into the search results
         $(document).on("input", ".author-input", function() {
-            
+            // clear book & author search input
             var newInput = $(this).val().trim();
             currentUser = $(this).parent().parent().index();
-            // console.log(newInput);
             console.log("Current User: " + currentUser);
             ifSearchBook = false;
             console.log("Current search: " + ifSearchBook);
@@ -218,30 +161,27 @@
             $(".user-section").each(function() {
                 let index = $(this).index();
                 if(index != currentUser){
-                    // console.log(index)
                     $(".user-section").eq(index).children(".author-area").children("input").val("");
                 }
                 $(this).children(".book-area").children("input").val("");
             });
 
-            $("#candidate-column").html("");
-
+            $("#candidate-block").html("");
             let books = new Array();
             $.get("/authornames", {partial: newInput}).done(function(value) {
                 authorsMap = jQuery.parseJSON(value);
-
-                $("#candidate-column").html("");
+                $("#candidate-block").html("");
                 let candidates_column = $("<ul>");
-                let column_size = authorsMap.length > 10 ? 10 : authorsMap.length
+                let column_size = authorsMap.length > 10 ? 10 : authorsMap.length // limit the number of results to be 10
                 for (let i = 0; i < column_size; i++) {
                     candidates_column.append($("<li class=\"author\" id=\"" + authorsMap[i]['author_id'] + "\">").html(authorsMap[i]["name"]));
                 }
-                $("#candidate-column").append(candidates_column);
+                $("#candidate-block").append(candidates_column);
             });
         });
 
         // Add selected book into the last user's book list
-        $(document).on("click", "#candidate-column .book", function() {
+        $(document).on("click", "#candidate-block .book", function() {
             let bookName = $(this).children("h2").html();
             console.log(bookName);
             let bookWorkID = $(this).attr("id");
@@ -251,8 +191,6 @@
                 userBookList.push($(this).attr("id"));
             });
 
-            // console.log(userBookList);
-
             if (!userBookList.includes(bookWorkID)){
                 let li_input = $("<li>");
                 li_input.append($("<div class='book-item' id=\'" + bookWorkID + "\'>")
@@ -260,18 +198,16 @@
                     .append(bookName));
                 li_input.append($("<div class='row rating'>")
                     .html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.nextElementSibling.value = this.value'><p>Love</p><output class='rating-output'>5</output>"));
-
                 $(".user-section").eq(currentUser).children(".book-area").children("ul").append(li_input);
-
                 $(".user-section").eq(currentUser).children(".book-area").children("input").val("");
-                $("#candidate-column").html("");
+                $("#candidate-block").html("");
             } else {
                 alert("Book already in list");
             }
         });
 
         // Add selected author into the last user's author list
-        $(document).on("click", "#candidate-column .author", function() {
+        $(document).on("click", "#candidate-block .author", function() {
             let authorName = $(this).html();
             console.log(authorName);
             let authorID = $(this).attr("id");
@@ -283,8 +219,6 @@
                     userAuthorList.push($(this).attr("id"));
             });
 
-            // console.log(userAuthorList);
-
             if (!userAuthorList.includes(authorID)){
                 let li_input = $("<li>");
                 li_input.append($("<div class=\"author-item\" id=\'" + authorID + "\'>")
@@ -292,17 +226,15 @@
                     .append(authorName));
                 li_input.append($("<div class='row rating'>")
                     .html("<p>Hate</p><input type='range' value='5' min='1' max='5' step='1' oninput='this.nextElementSibling.nextElementSibling.value = this.value'><p>Love</p><output class='rating-output'>5</output>"));
-
                 $(".user-section").eq(currentUser).children(".author-area").children("ul").append(li_input);
-
                 $(".user-section").eq(currentUser).children(".author-area").children("input").val("");
-                $("#candidate-column").html("");
+                $("#candidate-block").html("");
             } else {
                 alert("Author already in list");
             }
         });
 
-        // Remove book from book list
+        // Remove book/author item from user card
 		$(document).on("click", ".delete-button", function() {
 			$(this).parent().addClass("item-toggle");
 			$(this).parent().parent().fadeToggle(500, function() {
@@ -323,7 +255,7 @@
             $("#must-have-genre .row .generic-genre").eq(index).toggleClass("available-block");
         })
 
-        // Submit the pages
+        // Aggregate inputs and submit
         $("#submit-button").on("click", function() {
             let results = {"works": [], "authors": [], "required_genres": [], "excluded_genres": []};
             
@@ -344,16 +276,14 @@
             });
 
             let required_genres = $('#required-genre').val();
-
             $('.must-have-selected').each(function() {
                 results["required_genres"].push($(this).html());
             });
-
             $('.must-not-have-selected').each(function() {
                 results["excluded_genres"].push($(this).html());
             });
 
-            console.log(results);
+            // console.log(results);
 
             $.ajax({
                 type: 'post',
@@ -368,26 +298,6 @@
                 }
             });
         });
-
-        // $(document).on("submit", ".add-form", function(){
-        //     event.preventDefault();
-		// 	var newInput = $(this).children("input").val().trim();
-		// 	if (newInput) {
-		// 		let li_input = $("<li>");
-		// 		li_input.append($("<span class='check-box'>").html("<i class=\"fa fa-close delete-button\"></i>"));
-		// 		li_input.append($("<span class='item'> ").append(newInput));
-		// 		$(this).siblings("ul").append(li_input);
-		// 	}
-		// 	$(this).children("input").val(""); //clear input field after submission
-        // });
-
-		// $(document).ready(function(){
-        //     $(document).on("click", "img", function(){
-        //         event.preventDefault();
-        //         $(this).parent().siblings(".add-form").slideToggle();
-        //     });
-		// });
 	</script>
-
 </body>
 </html>

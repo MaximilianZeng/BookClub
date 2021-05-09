@@ -1,20 +1,15 @@
-.container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-}
-
-.row {
-    margin-left: 0;
-}
-
+/* ----- Overall styling ----- */
 body {
     padding: 0 ! important;
 	font-family: 'Noto Sans KR', sans-serif;
     background-image: url(assets/library_bg.jpeg);
 }
 
-#main-container {
+.row {
+    margin-left: 0;
+}
+
+#input-container {
     margin: 5% 10% 5% 10%;
     background-color: white;
     padding-bottom: 9vh;
@@ -24,8 +19,6 @@ ul {
 	margin: 0 auto 0 auto;
 	padding: 0;
 }
-
-
 
 ul li {
 	list-style-type: none;
@@ -40,7 +33,48 @@ ul li:hover {
     border-radius: 8px;
 }
 
-#candidate-column {
+.col-12, .col-sm-10, .col-md-8, .col-lg-6, .col-1 {
+	padding: 0;
+}
+
+a:hover {
+    color: inherit;
+    text-decoration: none; /* no underline */
+}
+
+
+/* ---------- Header ---------- */
+header {
+    padding: 6vh 0 25px 0;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+    font-weight: bolder;
+    display: flex;
+    flex-direction: row;
+}
+
+header > div {
+    margin-left: 40px;
+    width: 75%;
+}
+
+
+header > div > span {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+/* ---------- Search Results Block ---------- */
+#user-inputs {
+	margin-top: 1%;
+    padding-left: 2%;
+}
+
+#candidate-block {
     height: 26vh;
     display: flex;
     align-items: center;
@@ -50,18 +84,37 @@ ul li:hover {
     margin: 0 auto 2vh auto;
 }
 
-#candidate-column ul {
+#candidate-block ul {
     padding: 10px;
     display: contents;
 }
 
-#candidate-column ul li {
+#candidate-block ul li {
     cursor: pointer;
 }
 
-#list-container{
-	margin-top: 1%;
-    padding-left: 2%;
+/* ---------- User Cards Block ---------- */
+#user-block {
+    display: flex;
+    align-items: center;
+    background-color: rgba(61, 47, 35, 0.2);
+    border-radius: 15px;
+    margin: 0 auto 4vh auto;
+}
+
+#user-block-container {
+    display: flex;    
+    overflow-x: scroll;
+    align-items: center;
+}
+
+#add-user-button {
+    border-radius: 100%;
+}
+
+#add-user-button:hover {
+    box-shadow: 0px 0px 20px #888888;
+    cursor: pointer;
 }
 
 .user-section:hover > .remove-user-button {
@@ -72,9 +125,6 @@ ul li:hover {
 }
 
 .remove-user-button {
-    /* position: absolute;
-    top: -15px;
-    left: -15px; */
     display: none;
 }
 
@@ -94,7 +144,7 @@ ul li:hover {
     padding-bottom: 10px;
 }
 
-.list-title {
+.user-title {
 	background-color: #af9e7e;
 	color: #ffffff;
 	padding: 2% 1% 2% 5%;
@@ -105,60 +155,9 @@ ul li:hover {
     border-radius: 10px 10px 0px 0px;
 }
 
-.book-area {
-    width: 89%;
-    height: 175px;
-    margin: 6% auto 3% 20px;
-    text-overflow: ellipsis;
-    overflow-x: auto;
-    overflow-y: scroll;
-}
-
-.book-area > input {
-    border:0;
-    outline:0;
-    width: 90%;
-    border-bottom: 1px solid black;
-    background: transparent;
-    display: inline;
-    margin-left: 15px;
-}
-
-.book-area > input:focus {
-    border-bottom: 1px solid black;
-    background: transparent;
-}
-
-.author-area {
-    width: 89%;
-    height: 170px;
-    margin: 6% auto 3% 20px;
-    text-overflow: ellipsis;
-    overflow-x: auto;
-    overflow-y: scroll;
-}
-
-.author-area > input {
-    border:0;
-    outline:0;
-    width: 90%;
-    border-bottom: 1px solid black;
-    background: transparent;
-    display: inline;
-    margin-left: 15px;
-}
-
-.author-area > input:focus {
-    border-bottom: 1px solid black;
-    background: transparent;
-}
-
-
-.book-item {
-    padding-bottom: 5px;
-    width: 100%;
-    font-size: 12pt;
-    font-weight: bold;
+.user-title > strong {
+    font-size: 25pt;
+    margin-right: 2%;
 }
 
 .rating {
@@ -168,7 +167,6 @@ ul li:hover {
 .rating > p {
     font-size: 8pt;
     font-weight: 300;
-    /* margin-top: auto; */
     margin-bottom: 0;
 }
 
@@ -215,20 +213,6 @@ input[type=range]::-moz-range-thumb {
     color: #383838;
 }
 
-strong:first-child {
-    font-size: 25pt;
-    margin-right: 2%;
-}
-
-.author-results {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.clear-float {
-    clear: both;
-}
-
 .delete-button {
     cursor: pointer;
     color: rgb(190, 16, 16);
@@ -247,58 +231,117 @@ strong:first-child {
 	font-style: italic;
 }
 
-.col-12, .col-sm-10, .col-md-8, .col-lg-6, .col-1 {
-	padding: 0;
-}
-.container {
-	padding: 0;
-}
 
-.plus-button {
-	position: relative;
-    cursor: pointer;
-}
-
-#top-row {
-    padding: 6vh 0 25px 0;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 18px;
-    font-weight: bolder;
+/* ------ Book Area ------ */
+.book-area {
+    width: 89%;
+    height: 175px;
+    margin: 6% auto 3% 20px;
+    text-overflow: ellipsis;
+    overflow-x: auto;
+    overflow-y: scroll;
 }
 
-#top-row > div {
-    margin-left: 40px;
-    width: 75%;
+.book-area > input {
+    border:0;
+    outline:0;
+    width: 90%;
+    border-bottom: 1px solid black;
+    background: transparent;
+    display: inline;
+    margin-left: 15px;
 }
 
+.book-area > input:focus {
+    border-bottom: 1px solid black;
+    background: transparent;
+}
 
-#top-row > div > span {
-    font-size: 28px;
+.book-item {
+    padding-bottom: 5px;
+    width: 100%;
+    font-size: 12pt;
     font-weight: bold;
-    margin: 0;
 }
 
-#submit-button {
-    padding: 8px 25px 5px 25px;
-    margin: 3vh auto 0 auto;
-    background: black;
-    border-radius: 20px;
-    color: white;
-    font-size: 20pt;
-    font-weight: bold;
-    height: 60px;
+.book {
+    height: 90%;
+    min-width: 25vh;
+    max-width: 25vh;
+    margin: 10px 10px 10px 10px;
+    padding: 15px;
+    background-color: rgb(251 247 236);
     text-align: center;
-    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    border-radius: 10px;
+    font-size: 9pt;
 }
 
-#submit-button:hover {
-    background: rgb(53, 53, 53);
+.book:hover {
+    background-color: #af9e7e;
+    color: white
+}
+
+.book:hover {
     cursor: pointer;
-    box-shadow: 0px 0px 10px #888888;
 }
 
+.book-cover {
+    align-self: center;
+    height: 83%;
+}
+
+.book-title {
+    font-size: larger;
+}
+
+
+/* ------ Author Area ------ */
+.author-area {
+    width: 89%;
+    height: 170px;
+    margin: 6% auto 3% 20px;
+    text-overflow: ellipsis;
+    overflow-x: auto;
+    overflow-y: scroll;
+}
+
+.author-area > input {
+    border:0;
+    outline:0;
+    width: 90%;
+    border-bottom: 1px solid black;
+    background: transparent;
+    display: inline;
+    margin-left: 15px;
+}
+
+.author-area > input:focus {
+    border-bottom: 1px solid black;
+    background: transparent;
+}
+
+.author {
+    height: 90%;
+    min-width: 25vh;
+    margin: 10px 10px 10px 10px;
+    padding: 15px;
+    padding-top: 11vh;
+    font-size: 15pt;
+    font-weight: bold;
+    background-color: rgb(251 247 236);
+    text-align: center;
+    border-radius: 10px;
+}
+
+.author:hover {
+    background-color: #af9e7e;
+}
+
+
+/* ------ Genre Row ------ */
 #genre-row  {
     padding: 30px 0 5vh 0;
     width: 80%;
@@ -330,136 +373,44 @@ strong:first-child {
 }
 
 .available-block:hover {
-    /* background: rgb(33, 122, 30); */
     background: #7A6644;
     color: white;
     cursor: pointer;
 }
 
 #must-not-have-genre .available-block:hover {
-    /* background: rgb(146, 26, 26); */
     background: #7A6644;
     color: white;
     cursor: pointer;
 }
 
 .must-have-selected {
-    /* background: rgb(33, 122, 30); */
     background: #7A6644;
     color: white;
 }
 
 .must-not-have-selected {
-    /* background: rgb(146, 26, 26); */
     background: #7A6644;
     color: white;
 }
 
-.all-books {
-    display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
 
-.author {
-    height: 90%;
-    min-width: 25vh;
-    margin: 10px 10px 10px 10px;
-    padding: 15px;
-    padding-top: 11vh;
-    font-size: 15pt;
+/* ------ Submit Button ------ */
+#submit-button {
+    padding: 8px 25px 5px 25px;
+    margin: 3vh auto 0 auto;
+    background: black;
+    border-radius: 20px;
+    color: white;
+    font-size: 20pt;
     font-weight: bold;
-    background-color: rgb(251 247 236);
+    height: 60px;
     text-align: center;
-    border-radius: 10px;
+    width: 30vw;
 }
 
-.author:hover {
-    background-color: #af9e7e;
-}
-
-.book {
-    height: 90%;
-    min-width: 25vh;
-    margin: 10px 10px 10px 10px;
-    padding: 15px;
-    background-color: rgb(251 247 236);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
-    border-radius: 10px;
-    font-size: 9pt;
-}
-
-.book:hover {
-    background-color: #af9e7e;
-    color: white
-}
-
-.book:hover {
+#submit-button:hover {
+    background: rgb(53, 53, 53);
     cursor: pointer;
-}
-
-.book-cover {
-    align-self: center;
-    height: 83%;
-}
-
-.book-title {
-    font-size: larger;
-}
-
-.book-summary {
-    overflow-y: scroll;
-    text-align: left;
-}
-
-.book-author {
-    font-size: large;
-}
-a:hover {
-    color: inherit;
-    text-decoration: none; /* no underline */
-}
-
-.book-link {
-    color: inherit;
-    text-decoration: inherit;
-}
-
-#user-block {
-    /* display: inline-grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(auto-fill, 600px);
-    grid-gap: 10px; */
-    display: flex;
-    align-items: center;
-    background-color: rgba(61, 47, 35, 0.2);
-    border-radius: 15px;
-    margin: 0 auto 4vh auto;
-    /* flex-direction: row;
-    overflow: scroll; */
-}
-
-#user-block-container {
-    display: flex;    
-    overflow-x: scroll;
-    align-items: center;
-}
-
-#add-user-button {
-    /* position: fixed; */
-
-    /* right: 3vw;
-    bottom: 5vw; */
-    /* margin-top: 50%; */
-    border-radius: 100%;
-    /* z-index: 100; */
-}
-
-#add-user-button:hover {
-    box-shadow: 0px 0px 20px #888888;
-    cursor: pointer;
+    box-shadow: 0px 0px 10px #888888;
 }
