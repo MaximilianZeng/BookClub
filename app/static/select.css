@@ -106,6 +106,7 @@ header > div > span {
     display: flex;    
     overflow-x: scroll;
     align-items: center;
+    height: 500px;
 }
 
 #add-user-button {
